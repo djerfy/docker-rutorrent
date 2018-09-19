@@ -133,6 +133,7 @@ RUN set -xe && \
     git clone https://github.com/Phlooo/ruTorrent-MaterialDesign /var/www/html/rutorrent/plugins/theme/themes/materialdesign && \
     git clone https://github.com/AceP1983/ruTorrent-plugins /tmp/aceplugins && \
     git clone https://github.com/Gyran/rutorrent-instantsearch /var/www/html/rutorrent/plugins/instantsearch && \
+    git clone https://github.com/Gyran/rutorrent-ratiocolor /var/www/html/rutorrent/plugins/ratiocolor && \
     sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/rutorrent-thirdparty-plugins/filemanager/flm.class.php && \
     sed -i 's#.*/usr/bin/rar.*##' /tmp/rutorrent-thirdparty-plugins/filemanager/conf.php && \
     mv /tmp/rutorrent-thirdparty-plugins/* /var/www/html/rutorrent/plugins/ && \
