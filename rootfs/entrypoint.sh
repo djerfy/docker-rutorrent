@@ -135,6 +135,11 @@ f_log success "Check and generate .rtorrent.rc done"
 
 # Configure filebot
 f_log info "Install filebot ..."
+if [ -z "${FILEBOT_FOLDER}" ]; then
+    DIRNAME="Media"
+else
+    DIRNAME=${FILEBOT_FOLDER}
+fi
 for FILEBOT_DIR in movies animes music tv; do
     [ ! -e "/data/${DIRNAME}/${FILEBOT_DIR}" ] && mkdir -p /data/${DIRNAME}/${FILEBOT_DIR}
     find /data/${DIRNAME}/${FILEBOT_DIR} ! -user ${USER_NAME} -o ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
