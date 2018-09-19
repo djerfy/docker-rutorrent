@@ -184,6 +184,6 @@ EXPOSE 8080
 RUN set -xe && \
     chmod +x /entrypoint.sh
 
-ENTRYPOINT ["sh", "-x", "/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
