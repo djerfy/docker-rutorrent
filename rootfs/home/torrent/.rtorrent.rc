@@ -1,0 +1,52 @@
+scgi_port = 0.0.0.0:5000
+encoding.add = utf8
+
+directory.default.set = /data/torrents
+session.path.set = /data/.session
+protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
+
+trackers.use_udp.set = no
+dht.port = <RTORRENT_DHT>
+dht.mode.set = disable
+protocol.pex.set = no
+
+network.port_range.set = <RTORRENT_PORT>-<RTORRENT_PORT>
+network.port_random.set = no
+
+pieces.hash.on_completion.set = yes
+pieces.memory.max.set = 3500M
+
+throttle.min_peers.normal.set = 1
+throttle.max_peers.normal.set = 4096
+throttle.min_peers.seed.set = 1
+throttle.max_peers.seed.set = 4096
+throttle.max_uploads.set = 8192
+throttle.max_uploads.global.set = 8192
+
+network.xmlrpc.size_limit.set = 10000000
+network.max_open_files.set = 4096
+network.http.max_open.set = 4096
+
+execute2 = {sh,-c,/usr/bin/php /nginx/www/html/torrent/php/initplugins.php torrent &}
+
+schedule2 = watch_directory,1,1,"load_start=/data/.watch/*.torrent"
+schedule2 = untied_directory,5,5,"stop_untied=/data/.watch/*.torrent"
+schedule2 = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/var/run/torrent/rtorrent.sock"
+schedule2 = insufficient_disk_space,1,30,close_low_diskspace=500M
+
+method.set_key = event.download.finished,filebot,"execute2={/usr/local/bin/postdl,$d.base_path=,$d.name=,$d.custom1=}"
+method.set_key = event.download.erased,filebot_cleaner,"execute2=/usr/local/bin/postrm"
+
+method.set_key = event.download.resumed,link1,"d.create_link=base_filename,/data/.state,.started"
+method.set_key = event.download.paused,link1,"d.delete_link=base_filename,/data/.state,.started"
+method.set_key = event.download.finished,"d.create_link=base_filename,/data/.state,.finished"
+method.set_key = event.download.erased,"d.delete_link=base_filename,/data/.state,.finished"
+
+log.open_file = "rtorrent", "/tmp/stdout-rtorrent.log"
+log.add_output = "info", "rtorrent"
+log.add_output = "critical", "rtorrent"
+log.add_output = "error", "rtorrent"
+log.add_output = "warn", "rtorrent"
+log.add_output = "notice", "rtorrent"
+log.add_output = "debug", "rtorrent"
+

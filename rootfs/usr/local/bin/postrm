@@ -1,0 +1,20 @@
+#!/bin/sh
+
+(
+    sleep 10
+
+    # Remove broken symlinks
+    find /data/<DIRNAME> -type l | while read in
+    do
+        file "$in" | grep "broken symbolic link"
+        if [ "$?" -ne "1" ]
+        then
+            echo -ne "[filebot][postrm] broken symlink: $in\n"
+            rm -f $in
+        fi
+    done
+
+    # Remove empty directory
+    find /data/<DIRNAME> -type d -empty -exec rm -r {}\;
+) 2>&1 >> /tmp/stdout-filebot.log &
+

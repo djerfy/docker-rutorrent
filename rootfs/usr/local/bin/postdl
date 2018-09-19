@@ -1,0 +1,98 @@
+#!/bin/sh
+
+TORRENT_PATH="$1"
+TORRENT_NAME="$2"
+TORRENT_LABEL="$(echo $3 | tr '[:upper:]' '[:lower:]')"
+LOGFILE="/tmp/stdout-filebot.log"
+
+case $TORRENT_LABEL in
+
+    film|films|movie|movies)
+        echo -ne "[filebot][postdl] match movie: $TORRENT_NAME\n" >> ${LOGFILE}
+        /filebot/filebot.sh -script fn:amc \
+            --db TheMovieDB \
+            --output "/data/<DIRNAME>" \
+            --action <FILEBOT_METHOD> \
+            --conflict skip \
+            -non-strict \
+            --log-file ${LOGFILE} \
+            --dev excludeList=amc.excludes unsorted=y \
+            "movieFormat=/data/<DIRNAME>/movies/<FILEBOT_MOVIES>" \
+            "ut_dir=$TORRENT_PATH" \
+            "ut_kind=multi" \
+            "ut_title=$TORRENT_NAME" \
+            "ut_label=movie" 2>&1 >> ${LOGFILE} &
+        ;;
+
+    music|musics|musique|musiques)
+        echo -ne "[filebot][postdl] match music: $TORRENT_NAME\n" >> ${LOGFILE}
+        /filebot/filebot.sh -script fn:amc \
+            --db ID3 \
+            --output "/data/<DIRNAME>" \
+            --action <FILEBOT_METHOD> \
+            --conflict skip \
+            -non-strict \
+            --log-file ${LOGFILE} \
+            --dev excludeList=amc.excludes unsorted=y music=y \
+            "movieFormat=/data/<DIRNAME>/music/<FILEBOT_MUSICS>" \
+            "ut_dir=$TORRENT_PATH" \
+            "ut_kind=multi" \
+            "ut_title=$TORRENT_NAME" \
+            "ut_label=music" 2>&1 >> ${LOGFILE} &
+        ;;
+
+    tv|"tv show"|"tv show"|serie|series)
+        echo -ne "[filebot][postdl] match tv show: $TORRENT_NAME\n" >> ${LOGFILE}
+        /filebot/filebot.sh -script fn:amc \
+            --db TheTVDB \
+            --output "/data/<DIRNAME>" \
+            --action <FILEBOT_METHOD> \
+            --conflict skip \
+            -non-strict \
+            --log-file ${LOGFILE} \
+            --dev excludeList=amc.excludes unsorted=y \
+            "movieFormat=/data/<DIRNAME>/tv/<FILEBOT_TVSHOWS>" \
+            "ut_dir=$TORRENT_PATH" \
+            "ut_kind=multi" \
+            "ut_title=$TORRENT_NAME" \
+            "ut_label=tv" 2>&1 >> ${LOGFILE} &
+        ;;
+
+    anime|animes)
+        echo -ne "[filebot][postdl] match anime: $TORRENT_NAME\n" >> ${LOGFILE}
+        /filebot/filebot.sh -script fn:amc \
+            --db AniDB \
+            --output "/data/<DIRNAME>" \
+            --action <FILEBOT_METHOD> \
+            --conflict skip \
+            -non-strict \
+            --log-file ${LOGFILE} \
+            --dev excludeList=amc.excludes unsorted=y \
+            "movieFormat=/data/<DIRNAME>/animes/<FILEBOT_ANIMES>" \
+            "ut_dir=$TORRENT_PATH" \
+            "ut_kind=multi" \
+            "ut_title=$TORRENT_NAME" \
+            "ut_label=anime" 2>&1 >> ${LOGFILE} &
+        ;;
+
+    *)
+        echo -ne "[filebot][postdl] match unknown: $TORRENT_LABEL\n" >> ${LOGFILE}
+        /filebot/filebot.sh -script fn:amc \
+            --output "/data/<DIRNAME>" \
+            --action <FILEBOT_METHOD> \
+            --conflict skip \
+            -non-strict \
+            --log-file ${LOGFILE} \
+            --def excludeList=amc.excludes unsorted=y music=y \
+            "seriesFormat=/data/<DIRNAME>/tv/<FILEBOT_SERIES>" \
+            "animeFormat=/data/<DIRNAME/animes/<FILEBOT_ANIMES>" \
+            "movieFormat=/data/<DIRNAME>/movies/<FILEBOT_MOVIES>" \
+            "musicFormat=/data/<DIRNAME>/music/<FILEBOT_MUSICS" \
+            "ut_dir=$TORRENT_PATH" \
+            "ut_kind=multi" \
+            "ut_title=$TORRENT_NAME" \
+            "ut_label=$TORRENT_LABEL" 2>&1 >> ${LOGFILE} &
+        ;;
+
+esac
+
