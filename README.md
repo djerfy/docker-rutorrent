@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="docker-rutorrent" src="https://www.sketchappsources.com/resources/source-image/macbook-retina.png" height="140" />
+    <img alt="docker-rutorrent" src="https://mbtskoudsalg.com/images/macbook-pro-transparent-png.png" height="140" />
     <p align="center">
         <a href="https://github.com/djerfy/docker-rutorrent"><img alt="Github" src="https://flat.badgen.net/badge/github/master/green?icon=github"></a>
         <a href="https://hub.docker.com/r/djerfy/rutorrent"><img alt="Docker" src="https://flat.badgen.net/badge/docker/latest/green?icon=docker"></a>
