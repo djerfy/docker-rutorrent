@@ -131,15 +131,15 @@ RUN set -xe && \
     git clone https://github.com/mcrapet/plowshare /tmp/plowshare && \
     git clone https://github.com/xombiemp/ruTorrentMobile /var/www/html/rutorrent/plugins/mobile && \
     git clone https://github.com/Phlooo/ruTorrent-MaterialDesign /var/www/html/rutorrent/plugins/theme/themes/materialdesign && \
-    git clone https://github.com/AceP1983/ruTorrent-plugins /tmp/aceplugins && \
+    git clone https://github.com/djerfy/ruTorrent-plugins /tmp/djerfyplugins && \
     git clone https://github.com/Gyran/rutorrent-instantsearch /var/www/html/rutorrent/plugins/instantsearch && \
     git clone https://github.com/Gyran/rutorrent-ratiocolor /var/www/html/rutorrent/plugins/ratiocolor && \
     sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/rutorrent-thirdparty-plugins/filemanager/flm.class.php && \
     sed -i 's#.*/usr/bin/rar.*##' /tmp/rutorrent-thirdparty-plugins/filemanager/conf.php && \
     mv /tmp/rutorrent-thirdparty-plugins/* /var/www/html/rutorrent/plugins/ && \
     mv /var/www/html/rutorrent /var/www/html/torrent && \
-    mv /tmp/aceplugins/* /var/www/html/torrent/plugins/ && \
-    rm -Rf /tmp/aceplugins
+    mv /tmp/djerfyplugins/* /var/www/html/torrent/plugins/ && \
+    rm -Rf /tmp/djerfyplugins
 
 # Install GeoIP
 RUN set -xe && \
