@@ -54,6 +54,7 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 * `FILEBOT_MUSICS`: regex for rename musics (default: "{n}/{fn}")
 * `FILEBOT_SERIES`: regex for rename tvshow (default: "{n}/Season {s.pad(2)}/{s00e00} - {t}")
 * `FILEBOT_ANIMES`: regex for rename animes (default: "{n}/{e.pad(3)} - {t}")
+* `DEBUG`: running with debug output (bool) (default: false)
 
 ### Volumes
 
@@ -90,6 +91,7 @@ docker container run -d \
     -e FILEBOT_METHOD=move \
     -e UID=1001 \
     -e GID=1001 \
+    -e DEBUG=true \
     -v $(pwd)/data/data:/data \
     -v $(pwd)/data/config:/config \
     djerfy/rutorrent:latest

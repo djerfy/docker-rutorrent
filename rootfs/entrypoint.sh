@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ "$(echo ${DEBUG} | tr '[A-Z]' '[a-z]')" == "true" ]; then
+    set -x
+fi
+
 CSI="\033["
 CEND="${CSI}0m"
 CRED="${CSI}1;31m"
