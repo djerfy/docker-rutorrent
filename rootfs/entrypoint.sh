@@ -165,6 +165,15 @@ sed -e 's|<FILEBOT_MOVIES>|'"$FILEBOT_MOVIES"'|' \
 chmod +x /usr/local/bin/post*
 f_log success "Install filebot done"
 
+# Install GeoIP files
+f_log info "Install GeoIP files (country/city) ..."
+for GEOFILE in GeoLiteCity GeoLiteCountry; do
+    wget https://geolite.maxmind.com/download/geoip/database/${GEOFILE}.dat.gz -O /usr/share/GeoIP/${GEOFILE}.dat.gz
+    gzip -d /usr/share/GeoIP/${GEOFILE}.dat.gz
+    rm -f /usr/share/GeoIP/${GEOFILE}.dat.gz
+done
+f_log success "Install GeoIP files (country/city) done"
+
 # Install plowshare
 f_log info "Install plowshare ..."
 if [ -e "/home/torrent/.config/plowshare" ]; then

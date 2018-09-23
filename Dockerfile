@@ -144,11 +144,6 @@ RUN set -xe && \
 # Install GeoIP
 RUN set -xe && \
     mkdir -p /usr/share/GeoIP && \
-    cd /usr/share/GeoIP && \
-    wget https://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && \
-    wget https://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && \
-    gzip -d * && \
-    rm -f *.dat.gz && \
     pecl install geoip-${VER_GEOIP} && \
     chmod +x /usr/lib/php7/modules/geoip.so
 
@@ -169,10 +164,9 @@ RUN set -xe && \
     strip -s /usr/local/bin/mktorrent && \
     strip -s /usr/local/bin/mediainfo && \
     strip -s /usr/local/bin/fpcalc && \
-    apk del --no-cache build-base libtool automake autoconf \
-        libressl-dev ncurses-dev curl-dev zlib-dev libnl3-dev \
-        cppunit-dev binutils wget linux-headers libsigc++-dev \
-        php7-pear php7-dev wget && \
+    apk del --no-cache build-base libtool automake autoconf libressl-dev ncurses-dev curl-dev \
+        zlib-dev libnl3-dev cppunit-dev binutils linux-headers libsigc++-dev php7-pear php7-dev \
+        geoip-dev && \
     rm -Rf /tmp/*
 
 # Configure
