@@ -43,10 +43,7 @@ method.set_key = event.download.finished,"d.create_link=base_filename,/data/.sta
 method.set_key = event.download.erased,"d.delete_link=base_filename,/data/.state,.finished"
 
 log.open_file = "rtorrent", "/tmp/stdout-rtorrent.log"
-log.add_output = "info", "rtorrent"
 log.add_output = "critical", "rtorrent"
 log.add_output = "error", "rtorrent"
 log.add_output = "warn", "rtorrent"
-log.add_output = "notice", "rtorrent"
-log.add_output = "debug", "rtorrent"
 
