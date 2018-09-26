@@ -170,11 +170,10 @@ f_log success "Install filebot done"
 
 # Install GeoIP files
 f_log info "Install GeoIP files (country/city) ..."
-for GEOFILE in GeoLiteCity GeoLiteCountry/GeoIP; do
-    wget -q https://geolite.maxmind.com/download/geoip/database/${GEOFILE}.dat.gz -O /usr/share/GeoIP/${GEOFILE}.dat.gz
-    gzip -d /usr/share/GeoIP/${GEOFILE}.dat.gz
-    rm -f /usr/share/GeoIP/${GEOFILE}.dat.gz
-done
+wget -q https://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz -O /usr/share/GeoIP/GeoLiteCity.dat.gz
+wget -q https://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz -O /usr/share/GeoIP/GeoIP.dat.gz
+gzip -d /usr/share/GeoIP/*.dat.gz
+rm -f /usr/share/GeoIP/*.dat.gz
 f_log success "Install GeoIP files (country/city) done"
 
 # Install plowshare
