@@ -16,7 +16,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --dev excludeList=amc.excludes unsorted=y \
+            --def excludeList=amc.excludes unsorted=y \
             "movieFormat=/data/<DIRNAME>/movies/<FILEBOT_MOVIES>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -33,7 +33,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --dev excludeList=amc.excludes unsorted=y music=y \
+            --def excludeList=amc.excludes unsorted=y music=y \
             "movieFormat=/data/<DIRNAME>/music/<FILEBOT_MUSICS>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -50,7 +50,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --dev excludeList=amc.excludes unsorted=y \
+            --def excludeList=amc.excludes unsorted=y \
             "movieFormat=/data/<DIRNAME>/tv/<FILEBOT_TVSHOWS>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -67,7 +67,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --dev excludeList=amc.excludes unsorted=y \
+            --def excludeList=amc.excludes unsorted=y \
             "movieFormat=/data/<DIRNAME>/animes/<FILEBOT_ANIMES>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -85,7 +85,7 @@ case $TORRENT_LABEL in
             --log-file ${LOGFILE} \
             --def excludeList=amc.excludes unsorted=y music=y \
             "seriesFormat=/data/<DIRNAME>/tv/<FILEBOT_SERIES>" \
-            "animeFormat=/data/<DIRNAME/animes/<FILEBOT_ANIMES>" \
+            "animeFormat=/data/<DIRNAME>/animes/<FILEBOT_ANIMES>" \
             "movieFormat=/data/<DIRNAME>/movies/<FILEBOT_MOVIES>" \
             "musicFormat=/data/<DIRNAME>/music/<FILEBOT_MUSICS" \
             "ut_dir=$TORRENT_PATH" \
