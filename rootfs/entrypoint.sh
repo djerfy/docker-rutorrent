@@ -163,6 +163,8 @@ sed -e 's|<FILEBOT_MOVIES>|'"$FILEBOT_MOVIES"'|' \
     -e 's|<FILEBOT_ANIMES>|'"$FILEBOT_ANIMES"'|' \
     -e 's|<DIRNAME>|'"$DIRNAME"'|' \
     -i /usr/local/bin/postdl
+sed -e 's|<DIRNAME>|'"$DIRNAME"'|' \
+    -i /usr/local/bin/postrm
 chmod +x /usr/local/bin/post*
 f_log success "Install filebot done"
 
