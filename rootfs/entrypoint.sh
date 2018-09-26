@@ -170,8 +170,8 @@ f_log success "Install filebot done"
 
 # Install GeoIP files
 f_log info "Install GeoIP files (country/city) ..."
-for GEOFILE in GeoLiteCity GeoLiteCountry; do
-    wget https://geolite.maxmind.com/download/geoip/database/${GEOFILE}.dat.gz -O /usr/share/GeoIP/${GEOFILE}.dat.gz
+for GEOFILE in GeoLiteCity GeoLiteCountry/GeoIP; do
+    wget -q https://geolite.maxmind.com/download/geoip/database/${GEOFILE}.dat.gz -O /usr/share/GeoIP/${GEOFILE}.dat.gz
     gzip -d /usr/share/GeoIP/${GEOFILE}.dat.gz
     rm -f /usr/share/GeoIP/${GEOFILE}.dat.gz
 done
