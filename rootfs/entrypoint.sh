@@ -195,6 +195,11 @@ for FOLDER in /var/www /home/torrent /var/lib/nginx /etc/php7 /etc/nginx /var/lo
 done
 f_log success "Apply default files permissions done"
 
+# Apply filebot permissions
+f_log info "Apply filebot permissions ..."
+chown ${USER_NAME}:${GROUP_NAME} -R /filebot
+f_log success "Apply filebot permissions done"
+
 # Apply medias permissions
 f_log info "Apply medias permissions ..."
 find /data ! -user ${USER_NAME} -a ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
