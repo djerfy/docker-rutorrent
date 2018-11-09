@@ -51,7 +51,7 @@ case $TORRENT_LABEL in
             -non-strict \
             --log-file ${LOGFILE} \
             --def excludeList=amc.excludes unsorted=y \
-            "movieFormat=/data/<DIRNAME>/tv/<FILEBOT_TVSHOWS>" \
+            "movieFormat=/data/<DIRNAME>/tv/<FILEBOT_SERIES>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
             "ut_title=$TORRENT_NAME" \
@@ -87,7 +87,7 @@ case $TORRENT_LABEL in
             "seriesFormat=/data/<DIRNAME>/tv/<FILEBOT_SERIES>" \
             "animeFormat=/data/<DIRNAME>/animes/<FILEBOT_ANIMES>" \
             "movieFormat=/data/<DIRNAME>/movies/<FILEBOT_MOVIES>" \
-            "musicFormat=/data/<DIRNAME>/music/<FILEBOT_MUSICS" \
+            "musicFormat=/data/<DIRNAME>/music/<FILEBOT_MUSICS>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
             "ut_title=$TORRENT_NAME" \
