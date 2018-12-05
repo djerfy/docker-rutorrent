@@ -47,7 +47,7 @@ RUN set -xe && \
         -O /tmp/MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     wget https://downloads.sourceforge.net/zenlib/libzen_${VER_LIBZEN}.tar.gz \
         -O /tmp/libzen_${VER_LIBZEN}.tar.gz && \
-    wget https://downloads.sourceforge.net/project/filebot/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz \
+    wget https://get.filebot.net/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz
         -O /tmp/filebot.tar.xz && \
     wget https://github.com/acoustid/chromaprint/releases/download/v${VER_CHROMAPRINT}/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz \
         -O /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz
