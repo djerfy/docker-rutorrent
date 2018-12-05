@@ -73,7 +73,7 @@ RUN set -xe && \
         --disable-static && \
     make && \
     make install && \
-    ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/x86_64/libzen.so
+    ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so
 
 # Compile mkTorrent
 RUN set -xe && \
@@ -93,7 +93,7 @@ RUN set -xe && \
     ./CLI_Compile.sh && \
     cd /tmp/MediaInfo_CLI_GNU_FromSource/MediaInfo/Project/GNU/CLI && \
     make install && \
-    ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/x86_64/libzen.so
+    ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so
 
 # Compile xmlrpc-c
 RUN set -xe && \
