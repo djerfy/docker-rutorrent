@@ -5,11 +5,11 @@ LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
       repository="https://github.com/djerfy/docker-rutorrent"
 
 ARG BUILD_CORES
-ARG VER_MEDIAINFO="0.7.99"
+ARG VER_MEDIAINFO="18.08.1"
 ARG VER_RTORRENT="v0.9.7"
 ARG VER_LIBTORRENT="v0.13.7"
 ARG VER_LIBZEN="0.4.31"
-ARG VER_FILEBOT="4.7.9"
+ARG VER_FILEBOT="4.8.2"
 ARG VER_CHROMAPRINT="1.4.3"
 ARG VER_GEOIP="1.1.1"
 
@@ -33,7 +33,7 @@ RUN set -xe && \
         curl c-ares tini supervisor geoip su-exec nginx php7 php7-fpm php7-json php7-opcache php7-apcu \
         php7-mbstring libressl file findutils tar xz screen findutils bzip2 bash git sox cppunit-dev \
         cppunit openjdk8-jre java-jna-native binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
-        php7-ctype
+        php7-ctype libmediainfo
 
 # Download sources tools
 RUN set -xe && \
