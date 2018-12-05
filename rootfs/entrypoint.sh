@@ -144,7 +144,7 @@ if [ -z "${FILEBOT_FOLDER}" ]; then
 else
     DIRNAME=${FILEBOT_FOLDER}
 fi
-for FILEBOT_DIR in movies animes music tv; do
+for FILEBOT_DIR in movies animes music tvshow; do
     [ ! -e "/data/${DIRNAME}/${FILEBOT_DIR}" ] && mkdir -p /data/${DIRNAME}/${FILEBOT_DIR}
     find /data/${DIRNAME}/${FILEBOT_DIR} ! -user ${USER_NAME} -o ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
 done
@@ -167,6 +167,21 @@ sed -e 's|<DIRNAME>|'"$DIRNAME"'|' \
     -i /usr/local/bin/postrm
 chmod +x /usr/local/bin/post*
 f_log success "Install filebot done"
+
+# Apply license filebot if defined
+f_log info "License filebot ..."
+if [ ! -z "${FILEBOT_LICENSE_FILE}" ]; then
+    if [ -e "${FILEBOT_LICENSE_FILE}" ]; then
+        if [ -e "/filebot/filebot.sh" ]; then
+            /filebot/filebot.sh --license "${FILEBOT_LICENSE_FILE}"
+            f_log success "License filebot done"
+        else
+            f_log error "Unable load license ${FILEBOT_LICENSE_FILE}: filebot script not found"
+        fi
+    else
+        f_log error "Unable load license ${FILEBOT_LICENSE_FILE}: file not found"
+    fi
+fi
 
 # Install GeoIP files
 f_log info "Install GeoIP files (country/city) ..."
@@ -202,9 +217,11 @@ chown ${USER_NAME}:${GROUP_NAME} -R /filebot
 f_log success "Apply filebot permissions done"
 
 # Apply medias permissions
-f_log info "Apply medias permissions ..."
-find /data ! -user ${USER_NAME} -a ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
-f_log success "Apply medias permissions done"
+if [ "${SKIP_PERMS}" == "yes" ]; then
+    f_log info "Apply medias permissions ..."
+    find /data ! -user ${USER_NAME} -a ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
+    f_log success "Apply medias permissions done"
+fi
 
 # Create empty logs files
 f_log info "Create logs files stdout/stderr ..."
