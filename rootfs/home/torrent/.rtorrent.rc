@@ -1,3 +1,5 @@
+# rtorrent: v0.9.7
+
 scgi_port = 0.0.0.0:5000
 encoding.add = utf8
 
@@ -37,10 +39,10 @@ schedule2 = insufficient_disk_space,1,30,close_low_diskspace=500M
 method.set_key = event.download.finished,filebot,"execute2={/usr/local/bin/postdl,$d.base_path=,$d.name=,$d.custom1=}"
 method.set_key = event.download.erased,filebot_cleaner,"execute2=/usr/local/bin/postrm"
 
-method.set_key = event.download.resumed,link1,"d.create_link=base_filename,/data/.state,.started"
-method.set_key = event.download.paused,link1,"d.delete_link=base_filename,/data/.state,.started"
-method.set_key = event.download.finished,"d.create_link=base_filename,/data/.state,.finished"
-method.set_key = event.download.erased,"d.delete_link=base_filename,/data/.state,.finished"
+method.set_key = event.download.resumed,link1,"d.create_link=base_filename,/data/.state/,.started"
+method.set_key = event.download.paused,link1,"d.delete_link=base_filename,/data/.state/,.started"
+method.set_key = event.download.finished,"d.create_link=base_filename,/data/.state/,.finished"
+method.set_key = event.download.erased,"d.delete_link=base_filename,/data/.state/,.finished"
 
 log.open_file = "rtorrent", "/tmp/stdout-rtorrent.log"
 log.add_output = "critical", "rtorrent"

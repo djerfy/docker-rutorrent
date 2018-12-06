@@ -121,21 +121,25 @@ sed -e 's|<RTORRENT_PORT>|'${RTORRENT_PORT}'|g' \
 f_log success "Generate global configuration done"
 
 # Externalize rtorrent configuration
-f_log info "Check and generate .rtorrent.rc ..."
+f_log info "Configuration .rtorrent.rc ..."
 if [ ! -e "/config/rtorrent/.rtorrent.rc" ]; then
+    f_log info "Generate .rtorrent.rc ..."
     mv /home/torrent/.rtorrent.rc /config/rtorrent/.rtorrent.rc
     ln -sf /config/rtorrent/.rtorrent.rc /home/torrent/.rtorrent.rc
+    f_log success "Generate .rtorrent.rc done"
 else
-    grep -qE "(system.method.set_key|use_udp_trackers|peer_exchange)" /config/rtorrent/.rtorrent.rc
+    grep -qE "^# rtorrent: v0.9.7$" /config/rtorrent/.rtorrent.rc
     if [ "$?" -ne "0" ]; then
-        f_log info "Migrate to 0.9.7 configuration format ..."
+        f_log info "Migrate to 0.9.7 ..."
         mv /config/rtorrent/.rtorrent.rc /config/rtorrent/.rtorrent.rc.old
         mv /home/torrent/.rtorrent.rc /config/rtorrent/.rtorrent.rc
         ln -sf /config/rtorrent/.rtorrent.rc /home/torrent/.rtorrent.rc
-        f_log success "Migrate to 0.9.7 configuration format done"
+        f_log success "Migrate to 0.9.7 done"
+    else
+        f_log success "Already up to date"
     fi
 fi
-f_log success "Check and generate .rtorrent.rc done"    
+f_log success "Configuration .rtorrent.rc done"
 
 # Configure filebot
 f_log info "Install filebot ..."
