@@ -21,7 +21,7 @@ ENV UID="991" \
     PKG_CONFIG_PATH="/usr/local/lib/pkg_config" \
     FILEBOT_METHOD="symlink" \
     FILEBOT_MOVIES="{n} ({y})" \
-    FILEBOT_TVSHOWS="{n}/Season {s.pad(2)}/{s00e00} - {t}" \
+    FILEBOT_SERIES="{n}/Season {s.pad(2)}/{s00e00} - {t}" \
     FILEBOT_ANIMES="{n}/{e.pad(3)} - {t}" \
     FILEBOT_MUSICS="{n}/{fn}"
 
