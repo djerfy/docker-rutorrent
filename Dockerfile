@@ -45,8 +45,8 @@ RUN set -xe && \
         -O /tmp/MediaInfo_CLI_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     wget https://mediaarea.net/download/binary/libmediainfo0/${VER_MEDIAINFO}/MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz \
         -O /tmp/MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
-    wget https://downloads.sourceforge.net/zenlib/libzen_${VER_LIBZEN}.tar.gz \
-        -O /tmp/libzen_${VER_LIBZEN}.tar.gz && \
+    wget https://mediaarea.net/download/source/libzen/${VER_LIBZEN}/libzen_${VER_LIBZEN}.tar.bz2 && \
+        -O /tmp/libzen_${VER_LIBZEN}.tar.bz2 && \
     wget https://get.filebot.net/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz \
         -O /tmp/filebot.tar.xz && \
     wget https://github.com/acoustid/chromaprint/releases/download/v${VER_CHROMAPRINT}/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz \
@@ -56,7 +56,7 @@ RUN set -xe && \
 RUN set -xe && \
     mkdir -p /tmp /filebot && \
     cd /tmp && \
-    tar xzf libzen_${VER_LIBZEN}.tar.gz && \
+    tar xjf libzen_${VER_LIBZEN}.tar.bz2 && \
     tar xzf MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     tar xzf MediaInfo_CLI_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     tar xvf /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz && \
