@@ -66,7 +66,7 @@ RUN set -xe && \
 # Compile ZenLib tool
 RUN set -xe && \
     cd /tmp/ZenLib/Project/GNU/Library && \
-    ./autogen && \
+    ./autogen.sh && \
     ./configure \
         --prefix=/usr/local \
         --enable-shared \
