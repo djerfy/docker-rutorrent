@@ -78,9 +78,9 @@ if [ "${WEBROOT}" != "/" ]; then
     fi
     if [ -d "/config/custom_themes/" ]; then
         [ "$(ls /config/custom_themes/)" ] && for LIST in $(ls /config/custom_themes); do
-            if [ ! -d "/var/www/html${WEBROOT}/theme/themes/${LIST}" ]; then
-                mkdir -p /var/www/html${WEBROOT}/theme/themes
-                ln -sf /config/custom_themes/${LIST} /var/www/html${WEBROOT}/theme/themes/${LIST}
+            if [ ! -d "/var/www/html${WEBROOT}/plugins/theme/themes/${LIST}" ]; then
+                mkdir -p /var/www/html${WEBROOT}/plugins/theme/themes
+                ln -sf /config/custom_themes/${LIST} /var/www/html${WEBROOT}/plugins/theme/themes/${LIST}
             fi
         done
     fi
