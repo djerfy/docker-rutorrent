@@ -5,10 +5,10 @@ LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
       repository="https://github.com/djerfy/docker-rutorrent"
 
 ARG BUILD_CORES
-ARG VER_MEDIAINFO="18.08.1"
+ARG VER_MEDIAINFO="18.12"
 ARG VER_RTORRENT="v0.9.7"
 ARG VER_LIBTORRENT="v0.13.7"
-ARG VER_LIBZEN="0.4.31"
+ARG VER_LIBZEN="0.4.37"
 ARG VER_FILEBOT="4.8.2"
 ARG VER_CHROMAPRINT="1.4.3"
 ARG VER_GEOIP="1.1.1"
