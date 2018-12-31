@@ -45,7 +45,7 @@ RUN set -xe && \
         -O /tmp/MediaInfo_CLI_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     wget https://mediaarea.net/download/binary/libmediainfo0/${VER_MEDIAINFO}/MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz \
         -O /tmp/MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
-    wget https://mediaarea.net/download/source/libzen/${VER_LIBZEN}/libzen_${VER_LIBZEN}.tar.bz2 && \
+    wget https://mediaarea.net/download/source/libzen/${VER_LIBZEN}/libzen_${VER_LIBZEN}.tar.bz2 \
         -O /tmp/libzen_${VER_LIBZEN}.tar.bz2 && \
     wget https://get.filebot.net/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz \
         -O /tmp/filebot.tar.xz && \
