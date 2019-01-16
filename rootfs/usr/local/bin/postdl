@@ -16,7 +16,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --def excludeList=amc.excludes unsorted=y \
+            --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y \
             "movieFormat=/data/<DIRNAME>/movies/<FILEBOT_MOVIES>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -33,7 +33,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --def excludeList=amc.excludes unsorted=y music=y \
+            --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y music=y \
             "movieFormat=/data/<DIRNAME>/music/<FILEBOT_MUSICS>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -50,7 +50,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --def excludeList=amc.excludes unsorted=y \
+            --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y \
             "movieFormat=/data/<DIRNAME>/tvshow/<FILEBOT_SERIES>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -67,7 +67,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --def excludeList=amc.excludes unsorted=y \
+            --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y \
             "movieFormat=/data/<DIRNAME>/animes/<FILEBOT_ANIMES>" \
             "ut_dir=$TORRENT_PATH" \
             "ut_kind=multi" \
@@ -83,7 +83,7 @@ case $TORRENT_LABEL in
             --conflict skip \
             -non-strict \
             --log-file ${LOGFILE} \
-            --def excludeList=amc.excludes unsorted=y music=y \
+            --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y music=y \
             "seriesFormat=/data/<DIRNAME>/tvshow/<FILEBOT_SERIES>" \
             "animeFormat=/data/<DIRNAME>/animes/<FILEBOT_ANIMES>" \
             "movieFormat=/data/<DIRNAME>/movies/<FILEBOT_MOVIES>" \

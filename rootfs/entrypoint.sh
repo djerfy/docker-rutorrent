@@ -148,6 +148,10 @@ if [ -z "${FILEBOT_FOLDER}" ]; then
 else
     DIRNAME=${FILEBOT_FOLDER}
 fi
+if [ -z "${FILEBOT_EXCLUDE_FILE}" ]; then
+    FILEBOT_EXCLUDE_FILE="/data/${FILEBOT_FOLDER}/amc.excludes"
+fi
+touch ${FILEBOT_EXCLUDE_FILE}
 for FILEBOT_DIR in movies animes music tvshow; do
     [ ! -e "/data/${DIRNAME}/${FILEBOT_DIR}" ] && mkdir -p /data/${DIRNAME}/${FILEBOT_DIR}
     find /data/${DIRNAME}/${FILEBOT_DIR} ! -user ${USER_NAME} -o ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
@@ -165,6 +169,7 @@ sed -e 's|<FILEBOT_MOVIES>|'"$FILEBOT_MOVIES"'|' \
     -e 's|<FILEBOT_MUSICS>|'"$FILEBOT_MUSICS"'|' \
     -e 's|<FILEBOT_SERIES>|'"$FILEBOT_SERIES"'|' \
     -e 's|<FILEBOT_ANIMES>|'"$FILEBOT_ANIMES"'|' \
+    -e 's|<FILEBOT_EXCLUDE_FILE>|'"$FILEBOT_EXCLUDE_FILE"'|' \
     -e 's|<DIRNAME>|'"$DIRNAME"'|' \
     -i /usr/local/bin/postdl
 sed -e 's|<DIRNAME>|'"$DIRNAME"'|' \

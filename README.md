@@ -54,7 +54,8 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 * `FILEBOT_MUSICS`: regex for rename musics (default: "{n}/{fn}")
 * `FILEBOT_SERIES`: regex for rename tvshow (default: "{n}/Season {s.pad(2)}/{s00e00} - {t}")
 * `FILEBOT_ANIMES`: regex for rename animes (default: "{n}/{e.pad(3)} - {t}")
-* `FILEBOT_LICENSE_FILE`: defined the license file to load (default: none)
+* `FILEBOT_LICENSE_FILE`: define the license file (default: none)
+* `FILEBOT_EXCLUDE_FILE`: define the exclude file, related with `$FILEBOT_FOLDER` (default: /data/Media/amc.excludes) 
 * `DEBUG`: running with debug output (bool) (default: false)
 * `SKIP_PERMS`: don't apply chown on medias (movies, tvshow, animes, ...) (default: no)
 
