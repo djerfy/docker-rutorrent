@@ -1,9 +1,9 @@
 <p align="center">
     <img alt="docker-rutorrent" src="https://mbtskoudsalg.com/images/macbook-pro-transparent-png.png" height="140" />
     <p align="center">
-        <a href="https://github.com/djerfy/docker-rutorrent"><img alt="Github" src="https://flat.badgen.net/badge/github/master/green?icon=github"></a>
+        <a href="https://github.com/djerfy/docker-rutorrent"><img alt="Github" src="https://flat.badgen.net/badge/github/latest/green?icon=github"></a>
         <a href="https://hub.docker.com/r/djerfy/rutorrent"><img alt="Docker" src="https://flat.badgen.net/badge/docker/latest/green?icon=docker"></a>
-        <img alt="Version" src="https://flat.badgen.net/badge/version/v0.0.0/yellow">
+        <a href="https://github.com/djerfy/docker-rutorrent/tags"><img alt="Version" src="https://flat.badgen.net/badge/github/tag/djerfy/docker-rutorrent"></a>
         <a href="https://github.com/djerfy/docker-rutorrent/issues"><img alt="Issues" src="https://flat.badgen.net/github/open-issues/djerfy/docker-rutorrent"></a>
         <img alt="Services" src="https://flat.badgen.net/badge/services/rtorrent,rutorrent,filebot?list=1">
         <a href="https://twitter.com/djerfy><img alt="Twitter" src="https://flat.badgen.net/badge/twitter/djerfy/blue?icon=twitter"></a>
