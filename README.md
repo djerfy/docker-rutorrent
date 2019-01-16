@@ -48,7 +48,7 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 * `WEBROOT`: default access ruTorrent (default: /)
 * `RTORRENT_PORT`: port used for rTorrent (default: 6881)
 * `RTORRENT_DHT`: if DHT is to be used (default: off)
-* `FILEBOT_FOLDER`: defined emplacement to create files (default: Media)
+* `FILEBOT_FOLDER`: define emplacement to create files (default: Media)
 * `FILEBOT_METHOD`: method for rename media (default: symlink)
 * `FILEBOT_MOVIES`: regex for rename movies (default: "{n} ({y})")
 * `FILEBOT_MUSICS`: regex for rename musics (default: "{n}/{fn}")
@@ -56,6 +56,8 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 * `FILEBOT_ANIMES`: regex for rename animes (default: "{n}/{e.pad(3)} - {t}")
 * `FILEBOT_LICENSE_FILE`: define the license file (default: none)
 * `FILEBOT_EXCLUDE_FILE`: define the exclude file, related with `$FILEBOT_FOLDER` (default: /data/Media/amc.excludes) 
+* `FILEBOT_SCRIPT`: execute script after executing filebot command (default: no)
+* `FILEBOT_SCRIPT_DIR`: define emplacement to have script `postexec` (default: null)
 * `DEBUG`: running with debug output (bool) (default: false)
 * `SKIP_PERMS`: don't apply chown on medias (movies, tvshow, animes, ...) (default: no)
 

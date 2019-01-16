@@ -22,6 +22,12 @@ case $TORRENT_LABEL in
             "ut_kind=multi" \
             "ut_title=$TORRENT_NAME" \
             "ut_label=movie" 2>&1 >> ${LOGFILE} &
+        if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
+            ${FILEBOT_SCRIPT_DIR}/postexec \
+                "${TORRENT_LABEL}" \
+                "${TORRENT_PATH}" \
+                "${TORRENT_NAME}" 2>&1 >> ${LOGFILE} &
+        fi
         ;;
 
     music|musics|musique|musiques)
@@ -39,6 +45,12 @@ case $TORRENT_LABEL in
             "ut_kind=multi" \
             "ut_title=$TORRENT_NAME" \
             "ut_label=music" 2>&1 >> ${LOGFILE} &
+        if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
+            ${FILEBOT_SCRIPT_DIR}/postexec \
+                "${TORRENT_LABEL}" \
+                "${TORRENT_PATH}" \
+                "${TORRENT_NAME}" 2>&1 >> ${LOGFILE} &
+        fi
         ;;
 
     tv|"tv show"|"tv show"|serie|series)
@@ -56,6 +68,12 @@ case $TORRENT_LABEL in
             "ut_kind=multi" \
             "ut_title=$TORRENT_NAME" \
             "ut_label=tv" 2>&1 >> ${LOGFILE} &
+        if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
+            ${FILEBOT_SCRIPT_DIR}/postexec \
+                "${TORRENT_LABEL}" \
+                "${TORRENT_PATH}" \
+                "${TORRENT_NAME}" 2>&1 >> ${LOGFILE} &
+        fi
         ;;
 
     anime|animes)
@@ -73,6 +91,12 @@ case $TORRENT_LABEL in
             "ut_kind=multi" \
             "ut_title=$TORRENT_NAME" \
             "ut_label=anime" 2>&1 >> ${LOGFILE} &
+        if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
+            ${FILEBOT_SCRIPT_DIR}/postexec \
+                "${TORRENT_LABEL}" \
+                "${TORRENT_PATH}" \
+                "${TORRENT_NAME}" 2>&1 >> ${LOGFILE} &
+        fi
         ;;
 
     *)
@@ -92,7 +116,12 @@ case $TORRENT_LABEL in
             "ut_kind=multi" \
             "ut_title=$TORRENT_NAME" \
             "ut_label=$TORRENT_LABEL" 2>&1 >> ${LOGFILE} &
+        if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
+            ${FILEBOT_SCRIPT_DIR}/postexec \
+                "${TORRENT_LABEL}" \
+                "${TORRENT_PATH}" \
+                "${TORRENT_NAME}" 2>&1 >> ${LOGFILE} &
+        fi
         ;;
 
 esac
-
