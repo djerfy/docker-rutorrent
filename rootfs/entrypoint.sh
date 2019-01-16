@@ -195,9 +195,9 @@ fi
 # Display details if use script after filebot executing
 f_log info "Exec script after filebot ..."
 if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
-    l_log info "Exec script after filebot yes => ${FILEBOT_SCRIPT_DIR}/postexec"
+    f_log info "Exec script after filebot yes => ${FILEBOT_SCRIPT_DIR}/postexec"
 else
-    l_log info "Exec script after filebot no"
+    f_log info "Exec script after filebot no"
 fi
 
 # Install GeoIP files
