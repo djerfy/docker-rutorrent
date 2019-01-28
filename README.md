@@ -26,7 +26,7 @@
 
 ## Tags
 
-* latest ([Dockerfile](https://github.com/djerfy/docker-rutorrent/Dockerfile))
+* latest ([Dockerfile](https://github.com/djerfy/docker-rutorrent/blob/latest/Dockerfile))
 
 ## Description
 
