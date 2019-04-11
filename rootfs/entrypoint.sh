@@ -206,10 +206,11 @@ fi
 f_log info "Install GeoIP2 files (country/city) ..."
 mkdir -p /usr/share/GeoIP /var/www/html/rutorrent/plugins/geoip2/database
 cd /usr/share/GeoIP
-wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
-wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz
-tar xzf *.tar.gz
-rm -f *.tar.gz
+wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz -O GeoLite2-City.tar.gz
+wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz -O GeoLite2-Country.tar.gz
+tar -xzf GeoLite2-City.tar.gz
+tar -xzf GeoLite2-Country.tar.gz
+rm -f GeoLite2-*.tar.gz
 mv GeoLite2-*/*.mmdb .
 cp *.mmdb /var/www/html/torrent/plugins/geoip2/database/
 f_log success "Install GeoIP files (country/city) done"
