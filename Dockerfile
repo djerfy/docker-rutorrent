@@ -35,7 +35,8 @@ RUN set -xe && \
         curl c-ares tini supervisor geoip su-exec nginx php7 php7-fpm php7-json php7-opcache php7-apcu \
         php7-mbstring libressl file findutils tar xz screen findutils bzip2 bash git sox cppunit-dev \
         cppunit openjdk8-jre java-jna-native binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
-        php7-ctype libmediainfo
+        php7-ctype php7-phar libmediainfo nss linux-headers py-pip python && \
+    pip install cfscrape
 
 # Download sources tools
 RUN set -xe && \
@@ -136,11 +137,13 @@ RUN set -xe && \
     git clone https://github.com/djerfy/ruTorrent-plugins /tmp/djerfyplugins && \
     git clone https://github.com/Gyran/rutorrent-instantsearch /var/www/html/rutorrent/plugins/instantsearch && \
     git clone https://github.com/Gyran/rutorrent-ratiocolor /var/www/html/rutorrent/plugins/ratiocolor && \
+    git clone https://github.com/Micdu70/geoip2-rutorrent /var/www/html/rutorrent/plugins/geoip2 && \
     sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/rutorrent-thirdparty-plugins/filemanager/flm.class.php && \
     sed -i 's#.*/usr/bin/rar.*##' /tmp/rutorrent-thirdparty-plugins/filemanager/conf.php && \
     mv /tmp/rutorrent-thirdparty-plugins/* /var/www/html/rutorrent/plugins/ && \
     mv /var/www/html/rutorrent /var/www/html/torrent && \
     mv /tmp/djerfyplugins/* /var/www/html/torrent/plugins/ && \
+    rm -Rf /var/www/html/torrent/plugins/geoip && \
     rm -Rf /tmp/djerfyplugins
 
 # Install GeoIP
