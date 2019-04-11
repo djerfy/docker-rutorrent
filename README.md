@@ -58,6 +58,8 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 * `FILEBOT_EXCLUDE_FILE`: define the exclude file, related with `$FILEBOT_FOLDER` (default: /data/Media/amc.excludes) 
 * `FILEBOT_SCRIPT`: execute script after executing filebot command (default: no)
 * `FILEBOT_SCRIPT_DIR`: define emplacement to have script `postexec` (default: null)
+* `FILEBOT_LANG`: define language used for filebot (default: en)
+* `FILEBOT_CONFLICT`: define actions for conflicts (default: skip)
 * `DEBUG`: running with debug output (bool) (default: false)
 * `SKIP_PERMS`: don't apply chown on medias (movies, tvshow, animes, ...) (default: no)
 

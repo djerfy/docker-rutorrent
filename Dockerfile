@@ -23,7 +23,9 @@ ENV UID="991" \
     FILEBOT_MOVIES="{n} ({y})" \
     FILEBOT_SERIES="{n}/Season {s.pad(2)}/{s00e00} - {t}" \
     FILEBOT_ANIMES="{n}/{e.pad(3)} - {t}" \
-    FILEBOT_MUSICS="{n}/{fn}"
+    FILEBOT_MUSICS="{n}/{fn}" \
+    FILEBOT_LANG="en" \
+    FILEBOT_CONFLICT="skip"
 
 # Install packages and dependencies
 RUN set -xe && \

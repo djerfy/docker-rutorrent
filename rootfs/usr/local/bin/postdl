@@ -10,10 +10,11 @@ case ${TORRENT_LABEL} in
     film|films|movie|movies)
         echo -ne "[filebot][postdl] match movie: ${TORRENT_NAME}\n" >> ${LOGFILE}
         /filebot/filebot.sh -script fn:amc \
+            --lang "<FILEBOT_LANG>" \
             --db TheMovieDB \
             --output "/data/<DIRNAME>" \
             --action <FILEBOT_METHOD> \
-            --conflict skip \
+            --conflict <FILEBOT_CONFLICT> \
             -non-strict \
             --log-file ${LOGFILE} \
             --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y \
@@ -33,10 +34,11 @@ case ${TORRENT_LABEL} in
     music|musics|musique|musiques)
         echo -ne "[filebot][postdl] match music: ${TORRENT_NAME}\n" >> ${LOGFILE}
         /filebot/filebot.sh -script fn:amc \
+            --lang "<FILEBOT_LANG>" \
             --db ID3 \
             --output "/data/<DIRNAME>" \
             --action <FILEBOT_METHOD> \
-            --conflict skip \
+            --conflict <FILEBOT_CONFLICT> \
             -non-strict \
             --log-file ${LOGFILE} \
             --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y music=y \
@@ -56,10 +58,11 @@ case ${TORRENT_LABEL} in
     tv|"tv show"|"tv show"|serie|series)
         echo -ne "[filebot][postdl] match tv show: ${TORRENT_NAME}\n" >> ${LOGFILE}
         /filebot/filebot.sh -script fn:amc \
+            --lang "<FILEBOT_LANG>" \
             --db TheTVDB \
             --output "/data/<DIRNAME>" \
             --action <FILEBOT_METHOD> \
-            --conflict skip \
+            --conflict <FILEBOT_CONFLICT> \
             -non-strict \
             --log-file ${LOGFILE} \
             --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y \
@@ -79,10 +82,11 @@ case ${TORRENT_LABEL} in
     anime|animes)
         echo -ne "[filebot][postdl] match anime: ${TORRENT_NAME}\n" >> ${LOGFILE}
         /filebot/filebot.sh -script fn:amc \
+            --lang "<FILEBOT_LANG>" \
             --db AniDB \
             --output "/data/<DIRNAME>" \
             --action <FILEBOT_METHOD> \
-            --conflict skip \
+            --conflict <FILEBOT_CONFLICT> \
             -non-strict \
             --log-file ${LOGFILE} \
             --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y \
@@ -102,9 +106,10 @@ case ${TORRENT_LABEL} in
     *)
         echo -ne "[filebot][postdl] match unknown: ${TORRENT_LABEL}\n" >> ${LOGFILE}
         /filebot/filebot.sh -script fn:amc \
+            --lang "<FILEBOT_LANG>" \
             --output "/data/<DIRNAME>" \
             --action <FILEBOT_METHOD> \
-            --conflict skip \
+            --conflict <FILEBOT_CONFLICT> \
             -non-strict \
             --log-file ${LOGFILE} \
             --def excludeList=<FILEBOT_EXCLUDE_FILE> unsorted=y music=y \

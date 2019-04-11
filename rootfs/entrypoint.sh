@@ -164,15 +164,17 @@ grep -qE "method.set_key.*event.download.erased" /home/torrent/.rtorrent.rc
 if [ "$?" -ne "0" ]; then
     echo 'method.set_key = event.download.erased,filebot_cleaner,"execute2=/usr/local/bin/postrm"' >> /home/torrent/.rtorrent.rc
 fi
-sed -e 's|<FILEBOT_MOVIES>|'"$FILEBOT_MOVIES"'|' \
-    -e 's|<FILEBOT_METHOD>|'"$FILEBOT_METHOD"'|' \
-    -e 's|<FILEBOT_MUSICS>|'"$FILEBOT_MUSICS"'|' \
-    -e 's|<FILEBOT_SERIES>|'"$FILEBOT_SERIES"'|' \
-    -e 's|<FILEBOT_ANIMES>|'"$FILEBOT_ANIMES"'|' \
-    -e 's|<FILEBOT_EXCLUDE_FILE>|'"$FILEBOT_EXCLUDE_FILE"'|' \
-    -e 's|<DIRNAME>|'"$DIRNAME"'|' \
+sed -e 's|<FILEBOT_MOVIES>|'"${FILEBOT_MOVIES}"'|' \
+    -e 's|<FILEBOT_METHOD>|'"${FILEBOT_METHOD}"'|' \
+    -e 's|<FILEBOT_MUSICS>|'"${FILEBOT_MUSICS}"'|' \
+    -e 's|<FILEBOT_SERIES>|'"${FILEBOT_SERIES}"'|' \
+    -e 's|<FILEBOT_ANIMES>|'"${FILEBOT_ANIMES}"'|' \
+    -e 's|<FILEBOT_EXCLUDE_FILE>|'"${FILEBOT_EXCLUDE_FILE}"'|' \
+    -e 's|<FILEBOT_LANG>|'"${FILEBOT_LANG}"'|' \
+    -e 's|<FILEBOT_CONFLICT>|'"${FILEBOT_CONFLICT}"'|' \
+    -e 's|<DIRNAME>|'"${DIRNAME}"'|' \
     -i /usr/local/bin/postdl
-sed -e 's|<DIRNAME>|'"$DIRNAME"'|' \
+sed -e 's|<DIRNAME>|'"${DIRNAME}"'|' \
     -i /usr/local/bin/postrm
 chmod +x /usr/local/bin/post*
 f_log success "Install filebot done"
