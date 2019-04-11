@@ -204,7 +204,7 @@ fi
 
 # Install GeoIP files
 f_log info "Install GeoIP2 files (country/city) ..."
-mkdir -p /usr/share/GeoIP /var/www/html/rutorrent/plugins/geoip2/database
+mkdir -p /usr/share/GeoIP /var/www/html/torrent/plugins/geoip2/database
 cd /usr/share/GeoIP
 wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz -O GeoLite2-City.tar.gz
 wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz -O GeoLite2-Country.tar.gz
