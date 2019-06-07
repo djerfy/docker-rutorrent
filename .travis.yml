@@ -18,6 +18,9 @@ script:
   - curl -sL http://127.0.0.1:8080/ | grep theUILang.Loading && echo "ruTorrent running successfully"
   - docker logs rutorrent
 
+before_deploy:
+  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+
 deploy:
   # nightly
   - provider: script
