@@ -17,5 +17,18 @@ script:
   - docker ps | grep rutorrent && echo "Container running successfully"
   - curl -sL http://127.0.0.1:8080/ | grep theUILang.Loading && echo "ruTorrent running successfully"
   - docker logs rutorrent
-  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-  - docker push ${DOCKER_USERNAME}/rutorrent:nightly
+
+deploy:
+  # nightly
+  - provider: script
+    skip_cleanup: true
+    script: bash .travis/deploy.sh nightly
+    on:
+      branch: master
+  # latest
+  - provider: script
+    skip_cleanup: true
+    script: bash .travis/deploy.sh latest
+    on:
+      tags: true
+      all_branches: true
