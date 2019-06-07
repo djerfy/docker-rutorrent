@@ -24,7 +24,7 @@ deploy:
     skip_cleanup: true
     script: bash .travis/deploy.sh nightly
     on:
-      branch: master
+      branch: latest
   # latest
   - provider: script
     skip_cleanup: true
