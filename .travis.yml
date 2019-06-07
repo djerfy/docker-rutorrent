@@ -1,5 +1,5 @@
 sudo:
-language: python
+language: minimal
 services:
   - docker
 jobs:
