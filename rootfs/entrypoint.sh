@@ -65,7 +65,9 @@ if [ "${WEBROOT}" != "/" ]; then
             rm -rf /var/www/html${WEBROOT}/${DIR}
             ln -sf /config/rutorrent/${DIR} /var/www/html${WEBROOT}/${DIR}
         else
-            mv /var/www/html${WEBROOT}/${DIR} /config/rutorrent/
+            mkdir -p /config/rutorrent/${DIR}
+            mv /var/www/html${WEBROOT}/${DIR}/* /config/rutorrent/${DIR}/
+            rm -rf /var/www/html${WEBROOT}/${DIR}
             ln -sf /config/rutorrent/${DIR} /var/www/html${WEBROOT}/${DIR}
         fi
     done
@@ -95,7 +97,9 @@ else
             rm -rf /var/www/html/torrent/${DIR}
             ln -sf /config/rutorrent/${DIR} /var/www/html/torrent/${DIR}
         else
-            mv /var/www/html/torrent/${DIR} /config/rutorrent
+            mkdir -p /config/rutorrent/${DIR}
+            mv /var/www/html/torrent/${DIR}/* /config/rutorrent/${DIR}/
+            rm -rf /var/www/html/torrent/${DIR}
             ln -sf /config/rutorrent/${DIR} /var/www/html/torrent/${DIR}
         fi
     done
@@ -115,8 +119,8 @@ else
         done
     fi
 fi
-sed -e 's|<RTORRENT_PORT>|'${RTORRENT_PORT}'|g' \
-    -e 's|<RTORRENT_DHT>|'${RTORRENT_DHT}'|g' \
+sed -e 's|<RTORRENT_PORT>|'${RTORRENT_PORT:-6881}'|g' \
+    -e 's|<RTORRENT_DHT>|'${RTORRENT_DHT:-off}'|g' \
     -i /home/torrent/.rtorrent.rc
 f_log success "Generate global configuration done"
 
@@ -140,6 +144,16 @@ else
     fi
 fi
 f_log success "Configuration .rtorrent.rc done"
+
+# Fix initplugins path
+f_log info "Apply path initplugins ..."
+grep -qE " /nginx/" /home/torrent/.rtorrent.rc
+if [ "$?" -eq "0" ]; then
+    sed -i "s# /nginx/# /var/#g" /home/torrent/.rtorrent.rc
+    f_log success "Apply path initplugins done"
+else
+    f_log info "Path initplugins already applied"
+fi
 
 # Configure filebot
 f_log info "Install filebot ..."
@@ -240,11 +254,11 @@ f_log info "Apply filebot permissions ..."
 chown ${USER_NAME}:${GROUP_NAME} -R /filebot
 f_log success "Apply filebot permissions done"
 
-# Apply medias permissions
-if [ "${SKIP_PERMS}" == "yes" ]; then
-    f_log info "Apply medias permissions ..."
+# Apply medias/sessions permissions
+if [ "${SKIP_PERMS}" != "yes" ]; then
+    f_log info "Apply medias/sessions permissions ..."
     find /data ! -user ${USER_NAME} -a ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
-    f_log success "Apply medias permissions done"
+    f_log success "Apply medias/sessions permissions done"
 fi
 
 # Create empty logs files
@@ -261,10 +275,10 @@ f_log success "Remove rtorrent lock file done"
 # Starting processes
 f_log info "Starting services in progress ..."
 if [ $# -eq 0 ]; then
-    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -- tail -F /tmp/std*-*.log &
-    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -- supervisord -c /etc/supervisor/supervisord.conf
+    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -s -- tail -F /tmp/std*-*.log &
+    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -s -- supervisord -c /etc/supervisor/supervisord.conf
 else
-    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -- tail -F /tmp/std*-*.log &
-    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -- $@
+    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -s -- tail -F /tmp/std*-*.log &
+    exec su-exec ${USER_NAME}:${GROUP_NAME} /sbin/tini -s -- $@
 fi
 
