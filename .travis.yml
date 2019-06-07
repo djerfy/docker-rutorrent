@@ -9,17 +9,13 @@ before_script:
   - docker --version
 
 script:
-  - docker build -t djerfy/rutorrent:${TRAVIS_COMMIT} .
-  - docker tag djerfy/rutorrent:${TRAVIS_COMMIT} djerfy/rutorrent:nightly
+  - docker build -t ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} .
+  - docker tag ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} ${DOCKER_USERNAME}/rutorrent:nightly
   - docker volume create data
-  - docker run -d --name seedbox -p 8080:8080 -v data:/data -e DEBUG=${DEBUG:-false} djerfy/rutorrent:${TRAVIS_COMMIT}
+  - docker run -d --name rutorrent -p 8080:8080 -v data:/data -e DEBUG=${DEBUG:-false} ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT}
   - sleep 60
-  - docker ps | grep seedbox && echo "Container running successfully"
+  - docker ps | grep rutorrent && echo "Container running successfully"
   - curl -sL http://127.0.0.1:8080/ | grep theUILang.Loading && echo "ruTorrent running successfully"
-  - docker logs seedbox
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push djerfy/rutorrent:nightly
-
-notifications:
-  email:
-    - djerfy@gmail.com
+  - docker logs rutorrent
+  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+  - docker push ${DOCKER_USERNAME}/rutorrent:nightly
