@@ -103,6 +103,12 @@ docker container run -d \
     djerfy/rutorrent:latest
 ```
 
+### Travis
+
+Docker image is built and tested via [Travis CI](https://travis-ci.org/djerfy/docker-rutorrent/). Status of the last build [![Build Status](https://travis-ci.org/djerfy/docker-rutorrent.svg?branch=latest)](https://travis-ci.org/djerfy/docker-rutorrent).
+
+By default the last build (success) is pushed into Docker Hub with tag `nightly` (djerfy/rutorrent:nightly).
+
 ## Contributing
 
 Any contributions, are very welcome!
