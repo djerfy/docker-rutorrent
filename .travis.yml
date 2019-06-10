@@ -10,7 +10,7 @@ before_script:
 
 script:
   - docker pull ${DOCKER_USERNAME}/rutorrent:latest
-  - docker build -t ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} .
+  - docker build --cache-from ${DOCKER_USERNAME}/rutorrent:latest -t ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} .
   - docker tag ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} ${DOCKER_USERNAME}/rutorrent:nightly
   - docker volume create data
   - docker run -d --name rutorrent -p 8080:8080 -v data:/data -e DEBUG=${DEBUG:-false} ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT}
