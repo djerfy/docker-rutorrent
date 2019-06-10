@@ -9,6 +9,7 @@ before_script:
   - docker --version
 
 script:
+  - docker pull ${DOCKER_USERNAME}/rutorrent:latest
   - docker build -t ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} .
   - docker tag ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} ${DOCKER_USERNAME}/rutorrent:nightly
   - docker volume create data
