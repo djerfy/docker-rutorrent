@@ -6,7 +6,7 @@ LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
 
 ARG BUILD_CORES
 ARG VER_MEDIAINFO="19.07"
-ARG VER_RTORRENT="v0.9.7"
+ARG VER_RTORRENT="v0.9.8"
 ARG VER_LIBTORRENT="v0.13.7"
 ARG VER_LIBZEN="0.4.37"
 ARG VER_FILEBOT="4.8.5"
