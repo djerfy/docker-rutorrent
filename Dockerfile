@@ -35,7 +35,7 @@ RUN set -xe && \
         curl c-ares tini supervisor geoip su-exec nginx php7 php7-fpm php7-json php7-opcache php7-apcu \
         php7-mbstring libressl file findutils tar xz screen findutils bzip2 bash git sox cppunit-dev \
         cppunit openjdk8-jre java-jna-native binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
-        php7-ctype php7-phar libmediainfo nss linux-headers
+        php7-ctype php7-phar libmediainfo nss linux-headers shadow
 
 # Download sources tools
 RUN set -xe && \
