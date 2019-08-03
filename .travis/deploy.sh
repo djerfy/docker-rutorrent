@@ -15,6 +15,12 @@ do_push(){
     echo "Publish image ${DOCKER_USERNAME}/${IMAGE_NAME}:${TAG} to Docker Hub"
 }
 
+# check if authorized to push to the dockerhub
+[ -z "${DOCKER_USERNAME}" ] && echo "DOCKER_USERNAME is not defined, deploy canceled" && exit 0
+
+# docker login
+echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+
 case "${IMAGE_TAG}" in
     nightly)
         # push image with tag 'nightly' only
