@@ -15,7 +15,7 @@
 
 ## Features
 
-* Based on Alpine Linux
+* Based on Alpine Linux (version `3.8`)
 * Tools compiled from sources
 * Filebot is included by default
 * No **root** process
@@ -36,31 +36,31 @@ What is [ruTorrent](https://github.com/Novik/ruTorrent)?
 
 What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 
-* **ruTorrent** is the popular Bittorrent client.
+* **rTorrent** is the popular Bittorrent client.
 
 ## Configuration
 
 ### Environments
 
-* `UID`: define uid to running services (default: 991)
-* `GID`: define gid to running services (default: 991)
-* `WEBROOT`: default access ruTorrent (default: /)
-* `RTORRENT_PORT`: port used for rTorrent (default: 6881)
-* `RTORRENT_DHT`: if DHT is to be used (default: off)
-* `FILEBOT_FOLDER`: define emplacement to create files (default: Media)
-* `FILEBOT_METHOD`: method for rename media (default: symlink)
-* `FILEBOT_MOVIES`: regex for rename movies (default: "{n} ({y})")
-* `FILEBOT_MUSICS`: regex for rename musics (default: "{n}/{fn}")
-* `FILEBOT_SERIES`: regex for rename tvshow (default: "{n}/Season {s.pad(2)}/{s00e00} - {t}")
-* `FILEBOT_ANIMES`: regex for rename animes (default: "{n}/{e.pad(3)} - {t}")
-* `FILEBOT_LICENSE_FILE`: define the license file (default: none)
-* `FILEBOT_EXCLUDE_FILE`: define the exclude file, related with `$FILEBOT_FOLDER` (default: /data/Media/amc.excludes) 
-* `FILEBOT_SCRIPT`: execute script after executing filebot command (default: no)
-* `FILEBOT_SCRIPT_DIR`: define emplacement to have script `postexec` (default: null)
-* `FILEBOT_LANG`: define language used for filebot (default: en)
-* `FILEBOT_CONFLICT`: define actions for conflicts (default: skip)
-* `DEBUG`: running with debug output (bool) (default: false)
-* `SKIP_PERMS`: don't apply chown on medias (movies, tvshow, animes, ...) (default: no)
+* `UID`: define uid to running services (default: `991`)
+* `GID`: define gid to running services (default: `991`)
+* `WEBROOT`: default access ruTorrent (default: `/`)
+* `RTORRENT_PORT`: port used for rTorrent (default: `6881`)
+* `RTORRENT_DHT`: if DHT is to be used (default: `off`)
+* `FILEBOT_FOLDER`: define emplacement to create files (default: `Media`)
+* `FILEBOT_METHOD`: method for rename media (default: `symlink`)
+* `FILEBOT_MOVIES`: regex for rename movies (default: `"{n} ({y})"`)
+* `FILEBOT_MUSICS`: regex for rename musics (default: `"{n}/{fn}"`)
+* `FILEBOT_SERIES`: regex for rename tvshow (default: `"{n}/Season {s.pad(2)}/{s00e00} - {t}"`)
+* `FILEBOT_ANIMES`: regex for rename animes (default: `"{n}/{e.pad(3)} - {t}"`)
+* `FILEBOT_LICENSE_FILE`: define the license file (default: `none`)
+* `FILEBOT_EXCLUDE_FILE`: define the exclude file, related with `$FILEBOT_FOLDER` (default: `/data/Media/amc.excludes`) 
+* `FILEBOT_SCRIPT`: execute script after executing filebot command (default: `no`)
+* `FILEBOT_SCRIPT_DIR`: define emplacement to have script `postexec` (default: `null`)
+* `FILEBOT_LANG`: define language used for filebot (default: `en`)
+* `FILEBOT_CONFLICT`: define actions for conflicts (default: `skip`)
+* `DEBUG`: running with debug output (bool) (default: `false`)
+* `SKIP_PERMS`: don't apply chown on medias (movies, tvshow, animes, ...) (default: `no`)
 
 ### Volumes
 
