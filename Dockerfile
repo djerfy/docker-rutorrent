@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.10
 
 LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
       maintainer="XorHak <hello@xorhak.io>" \
