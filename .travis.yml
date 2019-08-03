@@ -5,22 +5,9 @@ language: minimal
 services:
   - docker
 
-before_script:
-  - docker --version
-
 script:
-  - docker pull ${DOCKER_USERNAME}/rutorrent:latest
-  - docker build --cache-from ${DOCKER_USERNAME}/rutorrent:latest -t ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} .
-  - docker tag ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT} ${DOCKER_USERNAME}/rutorrent:nightly
-  - docker volume create data
-  - docker run -d --name rutorrent -p 8080:8080 -v data:/data -e DEBUG=${DEBUG:-false} ${DOCKER_USERNAME}/rutorrent:${TRAVIS_COMMIT}
-  - sleep 60
-  - docker ps | grep rutorrent && echo "Container running successfully"
-  - curl -sL http://127.0.0.1:8080/ | grep theUILang.Loading && echo "ruTorrent running successfully"
-  - docker logs rutorrent
-
-before_deploy:
-  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+  # tests
+  - bash .travis/test.sh
 
 deploy:
   # nightly
