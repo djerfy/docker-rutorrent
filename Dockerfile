@@ -8,6 +8,7 @@ ARG BUILD_CORES
 ARG VER_MEDIAINFO="19.07"
 ARG VER_RTORRENT="v0.9.8"
 ARG VER_LIBTORRENT="v0.13.8"
+ARG VER_RUTORRENT="3.9"
 ARG VER_LIBZEN="0.4.37"
 ARG VER_FILEBOT="4.8.5"
 ARG VER_CHROMAPRINT="1.4.3"
@@ -127,8 +128,11 @@ RUN set -xe && \
 
 # Install ruTorrent
 RUN set -xe && \
-    mkdir -p /var/www && \
-    git clone https://github.com/Novik/ruTorrent /var/www/html/rutorrent && \
+    mkdir -p /var/www/html && \
+    wget https://github.com/Novik/ruTorrent/archive/v${VER_RUTORRENT}.tar.gz -O /tmp/rutorrent-${VER_RUTORRENT}.tar.gz && \
+    tar xvzf /tmp/rutorrent-${VER_RUTORRENT}.tar.gz -C /tmp && \
+    rm -f /tmp/rutorrent-${VER_RUTORRENT}.tar.gz && \
+    mv /tmp/ruTorrent-${VER_RUTORRENT} /var/www/html/rutorrent && \
     git clone https://github.com/nelu/rutorrent-thirdparty-plugins /tmp/rutorrent-thirdparty-plugins && \
     git clone https://github.com/mcrapet/plowshare /tmp/plowshare && \
     git clone https://github.com/xombiemp/ruTorrentMobile /var/www/html/rutorrent/plugins/mobile && \
