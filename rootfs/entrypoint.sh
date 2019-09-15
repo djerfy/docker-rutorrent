@@ -172,13 +172,13 @@ if [ ! -e "/config/rtorrent/.rtorrent.rc" ]; then
     ln -sf /config/rtorrent/.rtorrent.rc /home/torrent/.rtorrent.rc
     f_log success "Generate .rtorrent.rc done"
 else
-    grep -qE "^# rtorrent: v0.9.7$" /config/rtorrent/.rtorrent.rc
+    grep -qE "^# rtorrent: v0.9.8$" /config/rtorrent/.rtorrent.rc
     if [ "$?" -ne "0" ]; then
-        f_log info "Migrate to 0.9.7 ..."
+        f_log info "Migrate to 0.9.8 ..."
         mv /config/rtorrent/.rtorrent.rc /config/rtorrent/.rtorrent.rc.old
         mv /home/torrent/.rtorrent.rc /config/rtorrent/.rtorrent.rc
         ln -sf /config/rtorrent/.rtorrent.rc /home/torrent/.rtorrent.rc
-        f_log success "Migrate to 0.9.7 done"
+        f_log success "Migrate to 0.9.8 done"
     else
         f_log success "Already up to date"
     fi

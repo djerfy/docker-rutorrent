@@ -8,7 +8,7 @@ ARG BUILD_CORES
 ARG VER_MEDIAINFO="19.09"
 ARG VER_RTORRENT="v0.9.8"
 ARG VER_LIBTORRENT="v0.13.8"
-ARG VER_RUTORRENT="3.9"
+ARG VER_RUTORRENT="3.10-beta"
 ARG VER_LIBZEN="0.4.37"
 ARG VER_FILEBOT="4.8.5"
 ARG VER_CHROMAPRINT="1.4.3"
@@ -143,6 +143,7 @@ RUN set -xe && \
     git clone https://github.com/Micdu70/geoip2-rutorrent /var/www/html/rutorrent/plugins/geoip2 && \
     sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/rutorrent-thirdparty-plugins/filemanager/flm.class.php && \
     sed -i 's#.*/usr/bin/rar.*##' /tmp/rutorrent-thirdparty-plugins/filemanager/conf.php && \
+    sed -i 's/version: "[[:digit:]].[[:digit:]]\{1,2\}",/version: "'${VER_RUTORRENT}'",/g' /var/www/html/rutorrent/js/webui.js && \
     mv /tmp/rutorrent-thirdparty-plugins/* /var/www/html/rutorrent/plugins/ && \
     mv /var/www/html/rutorrent /var/www/html/torrent && \
     mv /tmp/djerfyplugins/* /var/www/html/torrent/plugins/ && \
