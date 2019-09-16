@@ -294,6 +294,11 @@ f_log info "Apply filebot permissions ..."
 chown ${USER_NAME}:${GROUP_NAME} -R /filebot
 f_log success "Apply filebot permissions done"
 
+# Apply url access on ruTorrent plugins
+f_log info "Apply access url on plugins ..."
+sed -i 's|<BASEURL>|'${BASEURL:-http\:\/\/example.com}'|g' /var/www/html/torrent/plugins/fileshare/conf.php /var/www/html/torrent/plugins/mediastream/conf.php
+f_log success "Apply access url on plugins done"
+
 # Apply medias/sessions permissions
 if [ "${SKIP_PERMS}" != "yes" ]; then
     f_log info "Apply medias/sessions permissions ..."
