@@ -296,7 +296,11 @@ f_log success "Apply filebot permissions done"
 
 # Apply url access on ruTorrent plugins
 f_log info "Apply access url on plugins ..."
-sed -i 's|<BASEURL>|'${BASEURL:-http\:\/\/example.com}'|g' /var/www/html/torrent/plugins/fileshare/conf.php /var/www/html/torrent/plugins/mediastream/conf.php
+if [ ! -z "${BASEURL_USER}" -a ! -z "${BASEURL_PASS}" ]; then
+    BASEURL_AUTH="${BASEURL_USER}:${BASEURL_PASS}@"
+fi
+sed -i 's|<BASEURL_SCHEME>|'${BASEURL_SCHEME:-http}'|g' /var/www/html/torrent/plugins/fileshare/conf.php /var/www/html/torrent/plugins/mediastream/conf.php
+sed -i 's|<BASEURL>|'${BASEURL_AUTH}${BASEURL:-localhost}'|g' /var/www/html/torrent/plugins/fileshare/conf.php /var/www/html/torrent/plugins/mediastream/conf.php
 f_log success "Apply access url on plugins done"
 
 # Apply medias/sessions permissions
