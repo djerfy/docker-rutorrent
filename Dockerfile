@@ -140,8 +140,8 @@ RUN set -xe && \
     git clone https://github.com/Gyran/rutorrent-instantsearch /var/www/html/rutorrent/plugins/instantsearch && \
     git clone https://github.com/Gyran/rutorrent-ratiocolor /var/www/html/rutorrent/plugins/ratiocolor && \
     git clone https://github.com/Micdu70/geoip2-rutorrent /var/www/html/rutorrent/plugins/geoip2 && \
-    sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/rutorrent-thirdparty-plugins/filemanager/flm.class.php && \
-    sed -i 's#.*/usr/bin/rar.*##' /tmp/rutorrent-thirdparty-plugins/filemanager/conf.php && \
+    sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/djerfyplugins/filemanager/flm.class.php && \
+    sed -i 's#.*/usr/bin/rar.*##' /tmp/djerfyplugins/filemanager/conf.php && \
     sed -i 's/version: "[[:digit:]].[[:digit:]]\{1,2\}",/version: "'${VER_RUTORRENT}'",/g' /var/www/html/rutorrent/js/webui.js && \
     mv /var/www/html/rutorrent /var/www/html/torrent && \
     mv /tmp/djerfyplugins/* /var/www/html/torrent/plugins/ && \
