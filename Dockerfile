@@ -136,18 +136,18 @@ RUN set -xe && \
     git clone https://github.com/mcrapet/plowshare /tmp/plowshare && \
     git clone https://github.com/xombiemp/ruTorrentMobile /var/www/html/rutorrent/plugins/mobile && \
     git clone https://github.com/Phlooo/ruTorrent-MaterialDesign /var/www/html/rutorrent/plugins/theme/themes/materialdesign && \
-    git clone https://github.com/djerfy/ruTorrent-plugins /tmp/djerfyplugins && \
+    git clone https://github.com/djerfy/ruTorrent-plugins /tmp/djerfy-plugins && \
     git clone https://github.com/Gyran/rutorrent-instantsearch /var/www/html/rutorrent/plugins/instantsearch && \
     git clone https://github.com/Gyran/rutorrent-ratiocolor /var/www/html/rutorrent/plugins/ratiocolor && \
     git clone https://github.com/Micdu70/geoip2-rutorrent /var/www/html/rutorrent/plugins/geoip2 && \
-    sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/djerfyplugins/filemanager/flm.class.php && \
-    sed -i 's#.*/usr/bin/rar.*##' /tmp/djerfyplugins/filemanager/conf.php && \
+    sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/djerfy-plugins/filemanager/flm.class.php && \
+    sed -i 's#.*/usr/bin/rar.*##' /tmp/djerfy-plugins/filemanager/conf.php && \
     sed -i 's/version: "[[:digit:]].[[:digit:]]\{1,2\}",/version: "'${VER_RUTORRENT}'",/g' /var/www/html/rutorrent/js/webui.js && \
     mv /var/www/html/rutorrent /var/www/html/torrent && \
-    mv /tmp/djerfyplugins/* /var/www/html/torrent/plugins/ && \
+    mv /tmp/djerfy-plugins/* /var/www/html/torrent/plugins/ && \
     rm -Rf /var/www/html/torrent/plugins/geoip && \
     rm -Rf /var/www/html/torrent/plugins/_cloudflare && \
-    rm -Rf /tmp/djerfyplugins
+    rm -Rf /tmp/djerfy-plugins
 
 # Install GeoIP
 RUN set -xe && \
