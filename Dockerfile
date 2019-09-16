@@ -133,7 +133,6 @@ RUN set -xe && \
     tar xvzf /tmp/rutorrent-${VER_RUTORRENT}.tar.gz -C /tmp && \
     rm -f /tmp/rutorrent-${VER_RUTORRENT}.tar.gz && \
     mv /tmp/ruTorrent-${VER_RUTORRENT} /var/www/html/rutorrent && \
-    git clone https://github.com/nelu/rutorrent-thirdparty-plugins /tmp/rutorrent-thirdparty-plugins && \
     git clone https://github.com/mcrapet/plowshare /tmp/plowshare && \
     git clone https://github.com/xombiemp/ruTorrentMobile /var/www/html/rutorrent/plugins/mobile && \
     git clone https://github.com/Phlooo/ruTorrent-MaterialDesign /var/www/html/rutorrent/plugins/theme/themes/materialdesign && \
@@ -144,7 +143,6 @@ RUN set -xe && \
     sed -i "s/'mkdir'.*$/'mkdir',/" /tmp/rutorrent-thirdparty-plugins/filemanager/flm.class.php && \
     sed -i 's#.*/usr/bin/rar.*##' /tmp/rutorrent-thirdparty-plugins/filemanager/conf.php && \
     sed -i 's/version: "[[:digit:]].[[:digit:]]\{1,2\}",/version: "'${VER_RUTORRENT}'",/g' /var/www/html/rutorrent/js/webui.js && \
-    mv /tmp/rutorrent-thirdparty-plugins/* /var/www/html/rutorrent/plugins/ && \
     mv /var/www/html/rutorrent /var/www/html/torrent && \
     mv /tmp/djerfyplugins/* /var/www/html/torrent/plugins/ && \
     rm -Rf /var/www/html/torrent/plugins/geoip && \
