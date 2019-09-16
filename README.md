@@ -18,6 +18,8 @@
 
 > Image of origin comes from [xataz](https://github.com/xataz): [docker-rtorrent-rutorrent](https://github.com/xataz/docker-rtorrent-rutorrent)
 
+> Image `djerfy/rutorrent:latest` use **ruTorrent v3.10-beta** (works with **rTorrent v0.9.8**) but stable for use
+
 ## Features
 
 * Based on Alpine Linux
