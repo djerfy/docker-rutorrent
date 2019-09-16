@@ -49,7 +49,8 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 
 * `UID`: define uid to running services (default: `991`)
 * `GID`: define gid to running services (default: `991`)
-* `WEBROOT`: default access ruTorrent (default: `/`)
+* `WEBROOT`: default URI access ruTorrent (default: `/`)
+* `BASEURL`: default URL access ruTorrent (default: `http://example.com`)
 * `RTORRENT_PORT`: port used for rTorrent (default: `6881`)
 * `RTORRENT_DHT`: if DHT is to be used (default: `off`)
 * `FILEBOT_FOLDER`: define emplacement to create files (default: `Media`)
