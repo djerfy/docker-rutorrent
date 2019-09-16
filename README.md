@@ -103,6 +103,8 @@ docker container run -d \
     -p 8080:8080 \
     -p 9999:9999 \
     -e WEBROOT=/ \
+    -e BASEURL=seedbox.example.com \
+    -e BASEURL_SCHEME=https \
     -e RTORRENT_DHT=on \
     -e RTORRENT_PORT=9999 \
     -e FILEBOT_METHOD=move \
