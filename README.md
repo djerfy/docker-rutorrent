@@ -3,8 +3,8 @@
     <p align="center">
         <a href="https://github.com/djerfy/docker-rutorrent"><img alt="Github" src="https://flat.badgen.net/badge/github/latest/green?icon=github"></a>
         <a href="https://hub.docker.com/r/djerfy/rutorrent"><img alt="Docker" src="https://flat.badgen.net/badge/docker/latest/green?icon=docker"></a>
-        <a href="https://github.com/djerfy/docker-rutorrent/tags"><img alt="Version" src="https://flat.badgen.net/github/tag/djerfy/docker-rutorrent"></a>
         <a href="https://travis-ci.org/djerfy/docker-rutorrent"><img alt="Travis-CI" src="https://flat.badgen.net/travis/djerfy/docker-rutorrent/latest"></a>
+        <a href="https://github.com/djerfy/docker-rutorrent/tags"><img alt="Version" src="https://flat.badgen.net/github/tag/djerfy/docker-rutorrent"></a>
         <img alt="Services" src="https://flat.badgen.net/badge/services/rtorrent,rutorrent,filebot?list=1">
         <br/>
         <a href="https://alpinelinux.org"><img alt="AlpineLinux" src="https://flat.badgen.net/badge/Alpine/3.10/green"></a>
@@ -22,7 +22,7 @@
 
 * Based on Alpine Linux
 * Tools compiled from sources
-* Filebot is included by default
+* Filebot is included by default (latest)
 * No **root** process
 * Save custom configuration rTorrent and ruTorrent
 * Logs in output (Supervisor, Nginx, PHP-FPM, rTorrent)
@@ -31,6 +31,7 @@
 ## Tags
 
 * latest ([Dockerfile](https://github.com/djerfy/docker-rutorrent/blob/latest/Dockerfile))
+* nofilebot ([Dockerfile](https://github.com/djerfy/docker-rutorrent/blob/latest/Dockerfile))
 
 ## Description
 
@@ -114,7 +115,7 @@ docker container run -d \
 
 ## Tests
 
-Docker image is built and tested via [Travis CI](https://travis-ci.org/djerfy/docker-rutorrent/). Status of the last build [![Build Status](https://travis-ci.org/djerfy/docker-rutorrent.svg?branch=latest)](https://travis-ci.org/djerfy/docker-rutorrent)
+Docker image is built and tested via [Travis CI](https://travis-ci.org/djerfy/docker-rutorrent/).
 
 By default the last build (success) is pushed into Docker Hub with tag `nightly` (`djerfy/rutorrent:nightly`).
 
