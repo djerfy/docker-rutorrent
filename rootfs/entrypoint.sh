@@ -36,51 +36,59 @@ f_log() {
 }
 
 # Create torrent group
-f_log info "Creating group torrent ..."
-if [ "$(egrep -c ':'${GID}':' /etc/group)" -eq "1" ]; then
-    GROUP_NAME=$(egrep ':'${GID}':' /etc/group | cut -d\: -f1)
-    GROUP_LASTGID=$(cat /etc/group | egrep -v "^no(body|group):" | cut -d\: -f3 | sort -n | tail -n1)
-    GROUP_NEXTGID=$((GROUP_LASTGID+1))
-    f_log warning "Already exist group with GID ${GID}: ${GROUP_NAME}"
-    groupmod -g ${GROUP_NEXTGID} ${GROUP_NAME}
-    if [ "$?" -eq "0" ]; then
-        f_log warning "Automatic change group ${GROUP_NAME} with GID ${GROUP_NEXTGID} ..."
+if [ "${GID}" == "0" ]; then
+    f_log warning "Skip creating group because you use GID 0 (not recommanded) ..."
+else
+    f_log info "Creating group torrent ..."
+    if [ "$(egrep -c ':'${GID}':' /etc/group)" -eq "1" ]; then
+        GROUP_NAME=$(egrep ':'${GID}':' /etc/group | cut -d\: -f1)
+        GROUP_LASTGID=$(cat /etc/group | egrep -v "^no(body|group):" | cut -d\: -f3 | sort -n | tail -n1)
+        GROUP_NEXTGID=$((GROUP_LASTGID+1))
+        f_log warning "Already exist group with GID ${GID}: ${GROUP_NAME}"
+        groupmod -g ${GROUP_NEXTGID} ${GROUP_NAME}
+        if [ "$?" -eq "0" ]; then
+            f_log warning "Automatic change group ${GROUP_NAME} with GID ${GROUP_NEXTGID} ..."
+        else
+            f_log error "Unable automatic change group ${GROUP_NAME} with GID ${GROUP_NEXTGID} :("
+            exit 1
+        fi
+    fi
+    if [ "$(egrep -c ':'${GID}':' /etc/group)" -eq "0" ]; then
+        addgroup -g ${GID} torrent
+        GROUP_NAME=torrent
+        f_log success "Group torrent created with GID ${GID}"
     else
-        f_log error "Unable automatic change group ${GROUP_NAME} with GID ${GROUP_NEXTGID} :("
+        f_log error "Unable to create group torrent with GID ${GID} :("
         exit 1
     fi
-fi
-if [ "$(egrep -c ':'${GID}':' /etc/group)" -eq "0" ]; then
-    addgroup -g ${GID} torrent
-    GROUP_NAME=torrent
-    f_log success "Group torrent created with GID ${GID}"
-else
-    f_log error "Unable to create group torrent with GID ${GID} :("
-    exit 1
 fi
 
 # Create torrent user
-f_log info "Creating user torrent ..."
-if [ "$(egrep -c ':'${UID}':' /etc/passwd)" -eq "1" ]; then
-    USER_NAME=$(egrep ':'${UID}':' /etc/passwd | cut -d\: -f1)
-    USER_LASTUID=$(cat /etc/passwd | egrep -v "^nobody:" | cut -d\: -f3 | sort -n | tail -n1)
-    USER_NEXTUID=$((USER_LASTUID+1))
-    f_log warning "Already exist user with UID ${UID}: ${USER_NAME}"
-    usermod -u ${USER_NEXTUID} ${GROUP_NAME}
-    if [ "$?" -eq "0" ]; then
-        f_log warning "Automatic change user ${USER_NAME} with UID ${USER_NEXTUID} ..."
+if [ "${UID}" == "0" ]; then
+    f_log info "Skip creating user because you use  UID 0 (not recommanded) ..."
+else
+    f_log info "Creating user torrent ..."
+    if [ "$(egrep -c ':'${UID}':' /etc/passwd)" -eq "1" ]; then
+        USER_NAME=$(egrep ':'${UID}':' /etc/passwd | cut -d\: -f1)
+        USER_LASTUID=$(cat /etc/passwd | egrep -v "^nobody:" | cut -d\: -f3 | sort -n | tail -n1)
+        USER_NEXTUID=$((USER_LASTUID+1))
+        f_log warning "Already exist user with UID ${UID}: ${USER_NAME}"
+        usermod -u ${USER_NEXTUID} ${GROUP_NAME}
+        if [ "$?" -eq "0" ]; then
+            f_log warning "Automatic change user ${USER_NAME} with UID ${USER_NEXTUID} ..."
+        else
+            f_log error "Unable automatic change user ${USER_NAME} with UID ${USER_NEXTGID} :("
+            exit 1
+        fi
+    fi
+    if [ "$(egrep -c ':'${UID}':' /etc/passwd)" -eq "0" ]; then
+        adduser -h /home/torrent -s /bin/sh -G ${GROUP_NAME} -D -u ${UID} torrent
+        USER_NAME=torrent
+        f_log success "User torrent created with UID ${UID}"
     else
-        f_log error "Unable automatic change user ${USER_NAME} with UID ${USER_NEXTGID} :("
+        f_log error "Unable to create user torrent with UID ${UID} :("
         exit 1
     fi
-fi
-if [ "$(egrep -c ':'${UID}':' /etc/passwd)" -eq "0" ]; then
-    adduser -h /home/torrent -s /bin/sh -G ${GROUP_NAME} -D -u ${UID} torrent
-    USER_NAME=torrent
-    f_log success "User torrent created with UID ${UID}"
-else
-    f_log error "Unable to create user torrent with UID ${UID} :("
-    exit 1
 fi
 
 # Create folders
