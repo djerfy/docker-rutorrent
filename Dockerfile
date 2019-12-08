@@ -5,7 +5,8 @@ LABEL description="rTorrent & ruTorrent (based on Alpine)" \
       repository="https://github.com/djerfy/docker-rutorrent"
 
 ARG BUILD_CORES
-ARG INSTALL_FILEBOT="no"
+
+# Define tools version
 ARG VER_MEDIAINFO="19.09"
 ARG VER_RTORRENT="v0.9.8"
 ARG VER_LIBTORRENT="v0.13.8"
@@ -15,6 +16,7 @@ ARG VER_FILEBOT="4.8.5"
 ARG VER_CHROMAPRINT="1.4.3"
 ARG VER_GEOIP="1.1.1"
 
+# Define default environment
 ENV UID="991" \
     GID="991" \
     WEBROOT="/" \
@@ -153,6 +155,7 @@ RUN set -xe && \
     make
 
 # Install Filebot and dependencies (ChromaPrint)
+ENV INSTALL_FILEBOT="no"
 RUN set -xe && \
     if [ "${INSTALL_FILEBOT}" == "yes" ]; then \
         # Prepare dependencies
@@ -162,8 +165,8 @@ RUN set -xe && \
         wget https://get.filebot.net/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz -O /tmp/filebot.tar.xz && \
         wget https://github.com/acoustid/chromaprint/releases/download/v${VER_CHROMAPRINT}/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz -O /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}.tar.gz && \
         # Decompress tools archives
-        tar xvf chromaprint-fpcalc-${VER_CHROMAPRINT}.tar.gz && \
-        tar xJf filebot.tar.xz && \
+        tar xvf /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}.tar.gz && \
+        tar xJf /tmp/filebot.tar.xz && \
         # Install fpcalc (ChromaPrint)
         mv chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64/fpcalc /usr/local/bin && \
         strip -s /usr/local/bin/fpcalc && \
@@ -172,10 +175,7 @@ RUN set -xe && \
         # Symlink libzen libraries
         ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so && \
         ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so \
-    else \
-        # Remove FILEBOT environment if it not installed
-        for FILEBOT_ENV in $(env | egrep "^FILEBOT_" | cut -d\= -f1); do unset ${FILEBOT_ENV}; done \
-    fi
+    ;fi
 
 # Cleanup
 RUN set -xe && \

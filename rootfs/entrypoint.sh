@@ -196,7 +196,7 @@ else
 fi
 
 # Configure filebot if installed
-if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+if [ "${INSTALL_FILEBOT}" == "yes" ]; then
     f_log info "Install filebot ..."
     if [ -z "${FILEBOT_FOLDER}" ]; then
         DIRNAME="Media"
@@ -240,7 +240,7 @@ else
 fi
 
 # Apply license filebot if defined
-if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+if [ "${INSTALL_FILEBOT}" == "yes" ]; then
     f_log info "License filebot ..."
     if [ ! -z "${FILEBOT_LICENSE_FILE}" ]; then
         if [ -e "${FILEBOT_LICENSE_FILE}" ]; then
@@ -257,7 +257,7 @@ if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
 fi
 
 # Display details if use script after filebot executing
-if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+if [ "${INSTALL_FILEBOT}" == "yes" ]; then
     f_log info "Exec script after filebot ..."
     if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
         f_log info "Exec script after filebot yes => ${FILEBOT_SCRIPT_DIR}/postexec"
@@ -300,7 +300,7 @@ done
 f_log success "Apply default files permissions done"
 
 # Apply filebot permissions
-if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+if [ "${INSTALL_FILEBOT}" == "yes" ]; then
     f_log info "Apply filebot permissions ..."
     chown ${USER_NAME}:${GROUP_NAME} -R /filebot
     f_log success "Apply filebot permissions done"
@@ -322,9 +322,18 @@ if [ "${SKIP_PERMS}" != "yes" ]; then
     f_log success "Apply medias/sessions permissions done"
 fi
 
+# Remove FILEBOT variables if not installed
+if [ "${INSTALL_FILEBOT}" != "yes" ]; then
+    f_log info "Remove filebot variables (because not installed) ..."
+    for FILEBOT_ENV in $(env | egrep '^FILEBOT_' | cut -f1 -d\=); do
+        unset ${FILEBOT_ENV}
+    done
+    f_log success "Remove filebot variables (because not installed) done"
+fi
+
 # Create empty logs files
 f_log info "Create logs files stdout/stderr ..."
-if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then touch /tmp/stdout-filebot.log; fi
+if [ "${INSTALL_FILEBOT}" == "yes" ]; then touch /tmp/stdout-filebot.log; fi
 touch /tmp/stdout-supervisor.log /tmp/stdout-nginx.log /tmp/stderr-nginx.log /tmp/stdout-rtorrent.log /tmp/stderr-php-fpm.log
 chown ${USER_NAME}:${GROUP_NAME} /tmp/std*-*.log
 f_log success "Create logs files stdout/stderr done"
