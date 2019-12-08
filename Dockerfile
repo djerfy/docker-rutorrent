@@ -1,10 +1,11 @@
 FROM alpine:3.10
 
-LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
+LABEL description="rTorrent & ruTorrent (based on Alpine)" \
       maintainer="XorHak <hello@xorhak.io>" \
       repository="https://github.com/djerfy/docker-rutorrent"
 
 ARG BUILD_CORES
+ARG INSTALL_FILEBOT="no"
 ARG VER_MEDIAINFO="19.09"
 ARG VER_RTORRENT="v0.9.8"
 ARG VER_LIBTORRENT="v0.13.8"
@@ -35,7 +36,7 @@ RUN set -xe && \
         zlib-dev libnl3-dev libsigc++-dev linux-headers ffmpeg libnl3 ca-certificates gzip zip unrar \
         curl c-ares tini supervisor geoip su-exec nginx php7 php7-fpm php7-json php7-opcache php7-apcu \
         php7-mbstring libressl file findutils tar xz screen findutils bzip2 bash git sox cppunit-dev \
-        cppunit openjdk8-jre java-jna-native binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
+        cppunit binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
         php7-ctype php7-phar libmediainfo nss linux-headers shadow
 
 # Download sources tools
@@ -49,22 +50,15 @@ RUN set -xe && \
     wget https://mediaarea.net/download/binary/libmediainfo0/${VER_MEDIAINFO}/MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz \
         -O /tmp/MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     wget https://mediaarea.net/download/source/libzen/${VER_LIBZEN}/libzen_${VER_LIBZEN}.tar.bz2 \
-        -O /tmp/libzen_${VER_LIBZEN}.tar.bz2 && \
-    wget https://get.filebot.net/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz \
-        -O /tmp/filebot.tar.xz && \
-    wget https://github.com/acoustid/chromaprint/releases/download/v${VER_CHROMAPRINT}/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz \
-        -O /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz
+        -O /tmp/libzen_${VER_LIBZEN}.tar.bz2
 
 # Decompress sources tools
 RUN set -xe && \
-    mkdir -p /tmp /filebot && \
+    mkdir -p /tmp && \
     cd /tmp && \
     tar xjf libzen_${VER_LIBZEN}.tar.bz2 && \
     tar xzf MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
-    tar xzf MediaInfo_CLI_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
-    tar xvf /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz && \
-    cd /filebot && \
-    tar xJf /tmp/filebot.tar.xz
+    tar xzf MediaInfo_CLI_${VER_MEDIAINFO}_GNU_FromSource.tar.gz
 
 # Compile ZenLib tool
 RUN set -xe && \
@@ -75,8 +69,7 @@ RUN set -xe && \
         --enable-shared \
         --disable-static && \
     make && \
-    make install && \
-    ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so
+    make install
 
 # Compile mkTorrent
 RUN set -xe && \
@@ -95,8 +88,7 @@ RUN set -xe && \
     cd /tmp/MediaInfo_CLI_GNU_FromSource && \
     ./CLI_Compile.sh && \
     cd /tmp/MediaInfo_CLI_GNU_FromSource/MediaInfo/Project/GNU/CLI && \
-    make install && \
-    ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so
+    make install
 
 # Compile xmlrpc-c
 RUN set -xe && \
@@ -160,18 +152,36 @@ RUN set -xe && \
     cd /tmp/plowshare && \
     make
 
-# Install ChromaPrint
+# Install Filebot and dependencies (ChromaPrint)
 RUN set -xe && \
-    cd /tmp && \
-    ls -lrht && \
-    mv chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64/fpcalc /usr/local/bin
+    if [ "${INSTALL_FILEBOT}" == "yes" ]; then \
+        # Prepare dependencies
+        apk add --no-cache openjdk8-jre java-jna-native && \
+        mkdir -p /filebot && cd /filebot && \
+        # Downloads tools
+        wget https://get.filebot.net/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz -O /tmp/filebot.tar.xz && \
+        wget https://github.com/acoustid/chromaprint/releases/download/v${VER_CHROMAPRINT}/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz -O /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}.tar.gz && \
+        # Decompress tools archives
+        tar xvf chromaprint-fpcalc-${VER_CHROMAPRINT}.tar.gz && \
+        tar xJf filebot.tar.xz && \
+        # Install fpcalc (ChromaPrint)
+        mv chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64/fpcalc /usr/local/bin && \
+        strip -s /usr/local/bin/fpcalc && \
+        # Remove tools archives
+        rm -Rf chromaprint-fpcalc-${VER_CHROMAPRINT}* filebot.tar.xz && \
+        # Symlink libzen libraries
+        ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so && \
+        ln -sf /usr/local/lib/libzen.so.0.0.0 /filebot/lib/Linux-x86_64/libzen.so \
+    else \
+        # Remove FILEBOT environment if it not installed
+        for FILEBOT_ENV in $(env | egrep "^FILEBOT_" | cut -d\= -f1); do unset ${FILEBOT_ENV}; done \
+    fi
 
 # Cleanup
 RUN set -xe && \
     strip -s /usr/local/bin/rtorrent && \
     strip -s /usr/local/bin/mktorrent && \
     strip -s /usr/local/bin/mediainfo && \
-    strip -s /usr/local/bin/fpcalc && \
     apk del --no-cache build-base libtool automake autoconf libressl-dev ncurses-dev curl-dev \
         zlib-dev libnl3-dev cppunit-dev binutils linux-headers libsigc++-dev php7-pear php7-dev \
         geoip-dev && \
@@ -180,6 +190,7 @@ RUN set -xe && \
 # Configure
 COPY rootfs /
 VOLUME /data /config
+WORKDIR /data
 EXPOSE 8080
 
 # Starting

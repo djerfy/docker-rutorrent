@@ -14,7 +14,7 @@
     </p>
 </p>
 
-# Docker rTorrent + ruTorrent + Filebot
+# Docker rTorrent + ruTorrent (and Filebot by default)
 
 > Image of origin comes from [xataz](https://github.com/xataz): [docker-rtorrent-rutorrent](https://github.com/xataz/docker-rtorrent-rutorrent)
 

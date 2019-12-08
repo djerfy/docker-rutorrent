@@ -195,65 +195,75 @@ else
     f_log info "Path initplugins already applied"
 fi
 
-# Configure filebot
-f_log info "Install filebot ..."
-if [ -z "${FILEBOT_FOLDER}" ]; then
-    DIRNAME="Media"
+# Configure filebot if installed
+if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+    f_log info "Install filebot ..."
+    if [ -z "${FILEBOT_FOLDER}" ]; then
+        DIRNAME="Media"
+    else
+        DIRNAME=${FILEBOT_FOLDER}
+    fi
+    if [ -z "${FILEBOT_EXCLUDE_FILE}" ]; then
+        FILEBOT_EXCLUDE_FILE="/data/${FILEBOT_FOLDER}/amc.excludes"
+    fi
+    touch ${FILEBOT_EXCLUDE_FILE}
+    for FILEBOT_DIR in movies animes music tvshow; do
+        [ ! -e "/data/${DIRNAME}/${FILEBOT_DIR}" ] && mkdir -p /data/${DIRNAME}/${FILEBOT_DIR}
+        find /data/${DIRNAME}/${FILEBOT_DIR} ! -user ${USER_NAME} -o ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
+    done
+    grep -qE "method.set_key.*event.download.finished" /home/torrent/.rtorrent.rc
+    if [ "$?" -ne "0" ]; then
+        echo 'method.set_key = event.download.finished,filebot,"execute2={/usr/local/bin/postdl,$d.base_path=,$d.name=,$d.custom1=}"' >> /home/torrent/.rtorrent.rc
+    fi
+    grep -qE "method.set_key.*event.download.erased" /home/torrent/.rtorrent.rc
+    if [ "$?" -ne "0" ]; then
+        echo 'method.set_key = event.download.erased,filebot_cleaner,"execute2=/usr/local/bin/postrm"' >> /home/torrent/.rtorrent.rc
+    fi
+    sed -e 's|<FILEBOT_MOVIES>|'"${FILEBOT_MOVIES}"'|' \
+        -e 's|<FILEBOT_METHOD>|'"${FILEBOT_METHOD}"'|' \
+        -e 's|<FILEBOT_MUSICS>|'"${FILEBOT_MUSICS}"'|' \
+        -e 's|<FILEBOT_SERIES>|'"${FILEBOT_SERIES}"'|' \
+        -e 's|<FILEBOT_ANIMES>|'"${FILEBOT_ANIMES}"'|' \
+        -e 's|<FILEBOT_EXCLUDE_FILE>|'"${FILEBOT_EXCLUDE_FILE}"'|' \
+        -e 's|<FILEBOT_LANG>|'"${FILEBOT_LANG}"'|' \
+        -e 's|<FILEBOT_CONFLICT>|'"${FILEBOT_CONFLICT}"'|' \
+        -e 's|<DIRNAME>|'"${DIRNAME}"'|' \
+        -i /usr/local/bin/postdl
+    sed -e 's|<DIRNAME>|'"${DIRNAME}"'|' \
+        -i /usr/local/bin/postrm
+    chmod +x /usr/local/bin/post*
+    f_log success "Install filebot done"
 else
-    DIRNAME=${FILEBOT_FOLDER}
+    f_log info "Skip filebot (not installed)"
+    sed -i "/filebot/d" /home/torrent/.rtorrent.rc
+    rm -Rf /usr/local/bin/post*
 fi
-if [ -z "${FILEBOT_EXCLUDE_FILE}" ]; then
-    FILEBOT_EXCLUDE_FILE="/data/${FILEBOT_FOLDER}/amc.excludes"
-fi
-touch ${FILEBOT_EXCLUDE_FILE}
-for FILEBOT_DIR in movies animes music tvshow; do
-    [ ! -e "/data/${DIRNAME}/${FILEBOT_DIR}" ] && mkdir -p /data/${DIRNAME}/${FILEBOT_DIR}
-    find /data/${DIRNAME}/${FILEBOT_DIR} ! -user ${USER_NAME} -o ! -group ${GROUP_NAME} -exec chown ${USER_NAME}:${GROUP_NAME} {} \;
-done
-grep -qE "method.set_key.*event.download.finished" /home/torrent/.rtorrent.rc
-if [ "$?" -ne "0" ]; then
-    echo 'method.set_key = event.download.finished,filebot,"execute2={/usr/local/bin/postdl,$d.base_path=,$d.name=,$d.custom1=}"' >> /home/torrent/.rtorrent.rc
-fi
-grep -qE "method.set_key.*event.download.erased" /home/torrent/.rtorrent.rc
-if [ "$?" -ne "0" ]; then
-    echo 'method.set_key = event.download.erased,filebot_cleaner,"execute2=/usr/local/bin/postrm"' >> /home/torrent/.rtorrent.rc
-fi
-sed -e 's|<FILEBOT_MOVIES>|'"${FILEBOT_MOVIES}"'|' \
-    -e 's|<FILEBOT_METHOD>|'"${FILEBOT_METHOD}"'|' \
-    -e 's|<FILEBOT_MUSICS>|'"${FILEBOT_MUSICS}"'|' \
-    -e 's|<FILEBOT_SERIES>|'"${FILEBOT_SERIES}"'|' \
-    -e 's|<FILEBOT_ANIMES>|'"${FILEBOT_ANIMES}"'|' \
-    -e 's|<FILEBOT_EXCLUDE_FILE>|'"${FILEBOT_EXCLUDE_FILE}"'|' \
-    -e 's|<FILEBOT_LANG>|'"${FILEBOT_LANG}"'|' \
-    -e 's|<FILEBOT_CONFLICT>|'"${FILEBOT_CONFLICT}"'|' \
-    -e 's|<DIRNAME>|'"${DIRNAME}"'|' \
-    -i /usr/local/bin/postdl
-sed -e 's|<DIRNAME>|'"${DIRNAME}"'|' \
-    -i /usr/local/bin/postrm
-chmod +x /usr/local/bin/post*
-f_log success "Install filebot done"
 
 # Apply license filebot if defined
-f_log info "License filebot ..."
-if [ ! -z "${FILEBOT_LICENSE_FILE}" ]; then
-    if [ -e "${FILEBOT_LICENSE_FILE}" ]; then
-        if [ -e "/filebot/filebot.sh" ]; then
-            /filebot/filebot.sh --license "${FILEBOT_LICENSE_FILE}"
-            f_log success "License filebot done"
+if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+    f_log info "License filebot ..."
+    if [ ! -z "${FILEBOT_LICENSE_FILE}" ]; then
+        if [ -e "${FILEBOT_LICENSE_FILE}" ]; then
+            if [ -e "/filebot/filebot.sh" ]; then
+                /filebot/filebot.sh --license "${FILEBOT_LICENSE_FILE}"
+                f_log success "License filebot done"
+            else
+                f_log error "Unable load license ${FILEBOT_LICENSE_FILE}: filebot script not found"
+            fi
         else
-            f_log error "Unable load license ${FILEBOT_LICENSE_FILE}: filebot script not found"
+            f_log error "Unable load license ${FILEBOT_LICENSE_FILE}: file not found"
         fi
-    else
-        f_log error "Unable load license ${FILEBOT_LICENSE_FILE}: file not found"
     fi
 fi
 
 # Display details if use script after filebot executing
-f_log info "Exec script after filebot ..."
-if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
-    f_log info "Exec script after filebot yes => ${FILEBOT_SCRIPT_DIR}/postexec"
-else
-    f_log info "Exec script after filebot no"
+if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+    f_log info "Exec script after filebot ..."
+    if [ "${FILEBOT_SCRIPT}" = "yes" ] && [ ! -z "${FILEBOT_SCRIPT_DIR}" ]; then
+        f_log info "Exec script after filebot yes => ${FILEBOT_SCRIPT_DIR}/postexec"
+    else
+       f_log info "Exec script after filebot no"
+    fi
 fi
 
 # Install GeoIP files
@@ -290,9 +300,11 @@ done
 f_log success "Apply default files permissions done"
 
 # Apply filebot permissions
-f_log info "Apply filebot permissions ..."
-chown ${USER_NAME}:${GROUP_NAME} -R /filebot
-f_log success "Apply filebot permissions done"
+if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then
+    f_log info "Apply filebot permissions ..."
+    chown ${USER_NAME}:${GROUP_NAME} -R /filebot
+    f_log success "Apply filebot permissions done"
+fi
 
 # Apply url access on ruTorrent plugins
 f_log info "Apply access url on plugins ..."
@@ -312,7 +324,8 @@ fi
 
 # Create empty logs files
 f_log info "Create logs files stdout/stderr ..."
-touch /tmp/stdout-filebot.log /tmp/stdout-supervisor.log /tmp/stdout-nginx.log /tmp/stderr-nginx.log /tmp/stdout-rtorrent.log /tmp/stderr-php-fpm.log
+if [ "$(env | egrep -c '^FILEBOT_')" -ne "0" ]; then touch /tmp/stdout-filebot.log; fi
+touch /tmp/stdout-supervisor.log /tmp/stdout-nginx.log /tmp/stderr-nginx.log /tmp/stdout-rtorrent.log /tmp/stderr-php-fpm.log
 chown ${USER_NAME}:${GROUP_NAME} /tmp/std*-*.log
 f_log success "Create logs files stdout/stderr done"
 
