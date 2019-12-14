@@ -35,6 +35,20 @@ f_log() {
     esac
 }
 
+# Execute custom commands
+f_log info "Execute custom commands ..."
+if [ -z "${EXECUTE_CUSTOM_COMMANDS}" ]; then
+    f_log info "Execute custom commands skipped (variable empty)"
+else
+    ${EXECUTE_CUSTOM_COMMANDS}
+    if [ "$?" -eq "0" ]; then
+        f_log success "Execute custom commands done"
+    else
+        f_log error "Execute custom commands error (return: $?)"
+        exit 1
+    fi
+fi
+
 # Create torrent group
 f_log info "Creating group torrent ..."
 if [ "$(egrep -c ':'${GID}':' /etc/group)" -eq "1" ]; then
