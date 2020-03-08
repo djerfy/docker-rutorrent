@@ -1,7 +1,7 @@
 FROM alpine:3.10
 
 LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
-      maintainer="XorHak <@xorhak.io>" \
+      maintainer="Djerfy <djerfy@gmail.com>" \
       repository="https://github.com/djerfy/docker-rutorrent"
 
 ARG BUILD_CORES
@@ -13,6 +13,7 @@ ARG VER_LIBZEN="0.4.37"
 ARG VER_FILEBOT="4.8.5"
 ARG VER_CHROMAPRINT="1.4.3"
 ARG VER_GEOIPUPDATE="4.2.2"
+ARG VER_GEOIPMODULE="1.1.1"
 
 ENV UID="991" \
     GID="991" \
@@ -154,7 +155,7 @@ RUN set -xe && \
 
 # Install GeoIP (php module)
 RUN set -xe && \
-    pecl install geoip-${VER_GEOIP} && \
+    pecl install geoip-${VER_GEOIPMODULE} && \
     chmod +x /usr/lib/php7/modules/geoip.so
 
 # Install GeoIP (tool)
