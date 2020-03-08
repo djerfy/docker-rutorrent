@@ -72,6 +72,7 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 * `FILEBOT_CONFLICT`: define actions for conflicts (default: `skip`)
 * `DEBUG`: running with debug output (bool) (default: `false`)
 * `SKIP_PERMS`: don't apply chown on medias (movies, tvshow, animes, ...) (default: `no`)
+* `EXECUTE_CUSTOM_COMMANDS`: execute custom actions, ex `apk add -U package && rm -rf /tmp/test` (default: `none`)
 * `GEOIP_ACCOUNT_ID`: account required to download geoip databases (read GeoIP section) (default: `none`)
 * `GEOIP_LICENSE_KEY`: license required (free) to download geoip databases (read GeoIP section) (default: `none`)
 
