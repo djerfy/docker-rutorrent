@@ -72,6 +72,8 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 * `FILEBOT_CONFLICT`: define actions for conflicts (default: `skip`)
 * `DEBUG`: running with debug output (bool) (default: `false`)
 * `SKIP_PERMS`: don't apply chown on medias (movies, tvshow, animes, ...) (default: `no`)
+* `GEOIP_ACCOUNT_ID`: account required to download geoip databases (read GeoIP section) (default: `none`)
+* `GEOIP_LICENSE_KEY`: license required (free) to download geoip databases (read GeoIP section) (default: `none`)
 
 ### Volumes
 
@@ -82,6 +84,12 @@ What is [rTorrent](https://github.com/rakshasa/rtorrent)?
 
 * `8080`: ruTorrent interface
 * `6881`: rTorrent (override with `RTORRENT_PORT`)
+
+### GeoIP
+
+To receive a free license and to download the GeoLite2 databases (City/Country) [sign up for a GeoLite2 account here](https://www.maxmind.com/en/geolite2/signup). More details [on this page](https://dev.maxmind.com/geoip/geoip2/geolite2/).
+
+In the left menu, select *Services* and *My License Key*. Here generate a new license key, in the output you have ACCOUNT ID and LICENSE KEY.
 
 ## Usage
 
@@ -108,6 +116,8 @@ docker container run -d \
     -e RTORRENT_DHT=on \
     -e RTORRENT_PORT=9999 \
     -e FILEBOT_METHOD=move \
+    -e GEOIP_ACCOUNT_ID=123456 \
+    -e GEOIP_LICENSE_KEY=AZERTY123 \
     -e UID=1001 \
     -e GID=1001 \
     -e DEBUG=true \

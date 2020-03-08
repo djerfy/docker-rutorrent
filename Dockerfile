@@ -1,7 +1,7 @@
 FROM alpine:3.10
 
 LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
-      maintainer="XorHak <hello@xorhak.io>" \
+      maintainer="XorHak <@xorhak.io>" \
       repository="https://github.com/djerfy/docker-rutorrent"
 
 ARG BUILD_CORES
@@ -12,7 +12,7 @@ ARG VER_RUTORRENT="3.10-beta"
 ARG VER_LIBZEN="0.4.37"
 ARG VER_FILEBOT="4.8.5"
 ARG VER_CHROMAPRINT="1.4.3"
-ARG VER_GEOIP="1.1.1"
+ARG VER_GEOIPUPDATE="4.2.2"
 
 ENV UID="991" \
     GID="991" \
@@ -53,7 +53,9 @@ RUN set -xe && \
     wget https://get.filebot.net/filebot/FileBot_${VER_FILEBOT}/FileBot_${VER_FILEBOT}-portable.tar.xz \
         -O /tmp/filebot.tar.xz && \
     wget https://github.com/acoustid/chromaprint/releases/download/v${VER_CHROMAPRINT}/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz \
-        -O /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz
+        -O /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz && \
+    wget https://github.com/maxmind/geoipupdate/releases/download/v${VER_GEOIPUPDATE}/geoipupdate_${VER_GEOIPUPDATE}_linux_amd64.tar.gz \
+        -O /tmp/geoipupdate.tar.gz
 
 # Decompress sources tools
 RUN set -xe && \
@@ -63,6 +65,7 @@ RUN set -xe && \
     tar xzf MediaInfo_DLL_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     tar xzf MediaInfo_CLI_${VER_MEDIAINFO}_GNU_FromSource.tar.gz && \
     tar xvf /tmp/chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64.tar.gz && \
+    tar xvf /tmp/geoipupdate.tar.gz && \
     cd /filebot && \
     tar xJf /tmp/filebot.tar.xz
 
@@ -149,11 +152,16 @@ RUN set -xe && \
     rm -Rf /var/www/html/torrent/plugins/_cloudflare && \
     rm -Rf /tmp/djerfy-plugins
 
-# Install GeoIP
+# Install GeoIP (php module)
 RUN set -xe && \
-    mkdir -p /usr/share/GeoIP && \
     pecl install geoip-${VER_GEOIP} && \
     chmod +x /usr/lib/php7/modules/geoip.so
+
+# Install GeoIP (tool)
+RUN set -xe && \
+    mkdir -p /usr/local/share/GeoIP && \
+    mv /tmp/geoipupdate_${VER_GEOIPUPDATE}_linux_amd64/geoipupdate /usr/local/bin && \
+    mv /tmp/geoipupdate_${VER_GEOIPUPDATE}_linux_amd64/GeoIP.conf /usr/local/etc
 
 # Install Plowshare
 RUN set -xe && \
@@ -163,7 +171,6 @@ RUN set -xe && \
 # Install ChromaPrint
 RUN set -xe && \
     cd /tmp && \
-    ls -lrht && \
     mv chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64/fpcalc /usr/local/bin
 
 # Cleanup
