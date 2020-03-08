@@ -161,8 +161,8 @@ RUN set -xe && \
 # Install GeoIP (tool)
 RUN set -xe && \
     mkdir -p /usr/local/share/GeoIP && \
-    mv /tmp/geoipupdate_${VER_GEOIPUPDATE}_linux_amd64/geoipupdate /usr/local/bin && \
-    mv /tmp/geoipupdate_${VER_GEOIPUPDATE}_linux_amd64/GeoIP.conf /usr/local/etc
+    mv /tmp/geoipupdate_${VER_GEOIPUPDATE}_linux_amd64/geoipupdate /usr/local/bin/geoipupdate && \
+    mv /tmp/geoipupdate_${VER_GEOIPUPDATE}_linux_amd64/GeoIP.conf /usr/local/etc/GeoIP.conf
 
 # Install Plowshare
 RUN set -xe && \
@@ -172,7 +172,7 @@ RUN set -xe && \
 # Install ChromaPrint
 RUN set -xe && \
     cd /tmp && \
-    mv chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64/fpcalc /usr/local/bin
+    mv chromaprint-fpcalc-${VER_CHROMAPRINT}-linux-x86_64/fpcalc /usr/local/bin/fpcalc
 
 # Cleanup
 RUN set -xe && \
@@ -180,6 +180,7 @@ RUN set -xe && \
     strip -s /usr/local/bin/mktorrent && \
     strip -s /usr/local/bin/mediainfo && \
     strip -s /usr/local/bin/fpcalc && \
+    strip -s /usr/local/bin/geoipupdate && \
     apk del --no-cache build-base libtool automake autoconf libressl-dev ncurses-dev curl-dev \
         zlib-dev libnl3-dev cppunit-dev binutils linux-headers libsigc++-dev php7-pear php7-dev \
         geoip-dev && \
