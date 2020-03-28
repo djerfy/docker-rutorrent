@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+    seedbox:
+        image: djerfy/rutorrent:latest
+        restart: always
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"
+            - "/srv/data:/data:rw"
+            - "/srv/config:/config:rw"
+            - "/srv/filebot/license.psm:/filebot/license.psm:ro"
+        environment:
+            - "TZ=Europe/Paris"
+            - "UID=1001"
+            - "GID=1001"
+            - "WEBROOT=/"
+            - "BASEURL=seedbox.domain.tld"
+            - "BASEURL_SCHEME=http"
+            - "RTORRENT_PORT=6881"
+            - "RTORRENT_DHT=off"
+            - "FILEBOT_FOLDER=plex"
+            - "FILEBOT_LICENSE_FILE=/filebot/license.psm"
+            - "FILEBOT_SCRIPT=yes"
+            - "FILEBOT_SCRIPT_DIR=/usr/local/bin"
+            - "SKIP_PERM=yes"
+        ports:
+            - "80:80"
+            - "6881:6881"
+            - "6881:6881/udp"
