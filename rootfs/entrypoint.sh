@@ -270,18 +270,21 @@ else
     f_log info "Exec script after filebot no"
 fi
 
-# Install GeoIP files
-f_log info "Install GeoIP2 files (country/city) ..."
-mkdir -p /usr/share/GeoIP /var/www/html/torrent/plugins/geoip2/database
-cd /usr/share/GeoIP
-wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz -O GeoLite2-City.tar.gz
-wget -q https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz -O GeoLite2-Country.tar.gz
-tar -xzf GeoLite2-City.tar.gz
-tar -xzf GeoLite2-Country.tar.gz
-rm -f GeoLite2-*.tar.gz
-mv GeoLite2-*/*.mmdb .
-cp *.mmdb /var/www/html/torrent/plugins/geoip2/database/
-f_log success "Install GeoIP files (country/city) done"
+# Configure GeoIP with a free license
+f_log info "Configure GeoIP with free license ..."
+if [ ! -z "${GEOIP_ACCOUNT_ID}" -a ! -z "${GEOIP_LICENSE_KEY}" ]; then
+    sed -i "s/YOUR_ACCOUNT_ID_HERE/${GEOIP_ACCOUNT_ID}/g" /usr/local/etc/GeoIP.conf
+    sed -i "s/YOUR_LICENSE_KEY_HERE/${GEOIP_LICENSE_KEY}/g" /usr/local/etc/GeoIP.conf
+    f_log success "Configure GeoIP with free license done"
+    # Download GeoIP databases (City/Country)
+    f_log info "Download GeoIP databases (City/Country) ..."
+    /usr/local/bin/geoipupdate --verbose
+    cp /usr/local/share/GeoIP/GeoLite2-*.mmdb /var/www/html/torrent/plugins/geoip2/database/
+    f_log success "Download GeoIP databases (City/Country) done"
+else
+    f_log warning "Configure GeoIP with free license skipped (variables not found)"
+    f_log warning "Download GeoIP databases (City/Country) skipped (no license configured)"
+fi
 
 # Install plowshare
 f_log info "Install plowshare ..."
