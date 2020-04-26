@@ -7,10 +7,10 @@
         <a href="https://travis-ci.org/djerfy/docker-rutorrent"><img alt="Travis-CI" src="https://flat.badgen.net/travis/djerfy/docker-rutorrent/latest"></a>
         <img alt="Services" src="https://flat.badgen.net/badge/services/rtorrent,rutorrent,filebot?list=1">
         <br/>
-        <a href="https://alpinelinux.org"><img alt="AlpineLinux" src="https://flat.badgen.net/badge/Alpine/3.10/green"></a>
+        <a href="https://alpinelinux.org"><img alt="AlpineLinux" src="https://flat.badgen.net/badge/Alpine/3.11/green"></a>
         <a href="https://github.com/rakshasa/rtorrent"><img alt="rTorrent" src="https://flat.badgen.net/badge/rTorrent/0.9.8/green"></a>
         <a href="https://github.com/Novik/ruTorrent"><img alt="ruTorrent" src="https://flat.badgen.net/badge/ruTorrent/3.9/green"></a>
-        <a href="https://www.filebot.net"><img alt="FileBot" src="https://flat.badgen.net/badge/FileBot/4.8.5/green"></a>
+        <a href="https://www.filebot.net"><img alt="FileBot" src="https://flat.badgen.net/badge/FileBot/4.9.1/green"></a>
     </p>
 </p>
 
