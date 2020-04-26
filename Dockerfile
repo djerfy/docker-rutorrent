@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.11
 
 LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
       maintainer="Djerfy <djerfy@gmail.com>" \
@@ -10,9 +10,9 @@ ARG VER_RTORRENT="v0.9.8"
 ARG VER_LIBTORRENT="v0.13.8"
 ARG VER_RUTORRENT="3.10-beta"
 ARG VER_LIBZEN="0.4.38"
-ARG VER_FILEBOT="4.8.5"
-ARG VER_CHROMAPRINT="1.4.3"
-ARG VER_GEOIPUPDATE="4.2.2"
+ARG VER_FILEBOT="4.9.1"
+ARG VER_CHROMAPRINT="1.5.0"
+ARG VER_GEOIPUPDATE="4.3.0"
 ARG VER_GEOIPMODULE="1.1.1"
 
 ENV UID="991" \
@@ -36,7 +36,7 @@ RUN set -xe && \
         zlib-dev libnl3-dev libsigc++-dev linux-headers ffmpeg libnl3 ca-certificates gzip zip unrar \
         curl c-ares tini supervisor geoip su-exec nginx php7 php7-fpm php7-json php7-opcache php7-apcu \
         php7-mbstring libressl file findutils tar xz screen findutils bzip2 bash git sox cppunit-dev \
-        cppunit openjdk8-jre java-jna-native binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
+        cppunit openjdk11-jre java-jna-native binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
         php7-ctype php7-phar php7-bcmath libmediainfo nss linux-headers shadow
 
 # Download sources tools
