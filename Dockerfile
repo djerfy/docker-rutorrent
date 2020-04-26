@@ -85,6 +85,8 @@ RUN set -xe && \
 # Compile mkTorrent
 RUN set -xe && \
     cd /tmp/mktorrent && \
+    # patch int64_t type name
+    sed -i 's/#include "ll.h"/#include "ll.h"\n#include <stdint.h>/' mktorrent.h
     make -j ${BUILD_CORES-$(grep -c "processor" /proc/cpuinfo)} && \
     make install
 
