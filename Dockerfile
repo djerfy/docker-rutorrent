@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.12
 
 LABEL description="rTorrent & ruTorrent & Filebot (based on Alpine)" \
       maintainer="Djerfy <djerfy@gmail.com>" \
@@ -8,7 +8,7 @@ ARG BUILD_CORES
 ARG VER_MEDIAINFO="20.03"
 ARG VER_RTORRENT="v0.9.8"
 ARG VER_LIBTORRENT="v0.13.8"
-ARG VER_RUTORRENT="3.10-beta"
+ARG VER_RUTORRENT="3.10"
 ARG VER_LIBZEN="0.4.38"
 ARG VER_FILEBOT="4.9.1"
 ARG VER_CHROMAPRINT="1.5.0"
@@ -37,7 +37,7 @@ RUN set -xe && \
         curl c-ares tini supervisor geoip su-exec nginx php7 php7-fpm php7-json php7-opcache php7-apcu \
         php7-mbstring libressl file findutils tar xz screen findutils bzip2 bash git sox cppunit-dev \
         cppunit openjdk11-jre java-jna-native binutils wget geoip-dev php7-pear php7-dev tzdata cksfv \
-        php7-ctype php7-phar php7-bcmath libmediainfo nss linux-headers shadow
+        php7-ctype php7-phar php7-bcmath php7-session php7-curl libmediainfo nss linux-headers shadow
 
 # Download sources tools
 RUN set -xe && \
