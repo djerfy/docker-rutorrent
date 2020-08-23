@@ -327,6 +327,12 @@ if [ "${SKIP_PERMS}" != "yes" ]; then
     f_log success "Apply medias/sessions permissions done"
 fi
 
+# Clean php configuration
+f_log info "Clean php configuration ..."
+[ -e "/etc/php7/conf.d/geoip.ini" ] && sed -i "/^extension=ctype.so$/d" /etc/php7/conf.d/geoip.ini
+[ -e "/etc/php7/conf.d/00_opcache.ini" ] && rm -f /etc/php7/conf.d/00_opcache.ini
+f_log success "Clean php configuration done"
+
 # Create empty logs files
 f_log info "Create logs files stdout/stderr ..."
 touch /tmp/stdout-filebot.log /tmp/stdout-supervisor.log /tmp/stdout-nginx.log /tmp/stderr-nginx.log /tmp/stdout-rtorrent.log /tmp/stderr-php-fpm.log
