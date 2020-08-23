@@ -17,9 +17,9 @@
 	$overwriteUploadedTorrents = false;
 	$topDirectory = '/data/torrents';
 	$forbidUserSettings = false;
-	$scgi_port = 5000;
-	$scgi_host = "127.0.0.1";
-	$XMLRPCMountPoint = "<webroot>RPC";
+	$scgi_port = 0;
+	$scgi_host = "unix:///run/torrent/rtorrent.sock";
+	$XMLRPCMountPoint = "<webroot>RPC2";
 	$pathToExternals = array(
         "php"       => '/usr/bin/php7',
         "curl"      => '/usr/bin/curl',

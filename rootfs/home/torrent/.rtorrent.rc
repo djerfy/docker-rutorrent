@@ -1,6 +1,6 @@
 # rtorrent: v0.9.8
 
-network.scgi.open_port = 0.0.0.0:5000
+network.scgi.open_port = /run/torrent/rtorrent.sock
 encoding.add = utf8
 
 directory.default.set = /data/torrents
@@ -18,7 +18,6 @@ network.port_random.set = no
 pieces.hash.on_completion.set = yes
 pieces.memory.max.set = 3500M
 
-network.bind_address.set = 0.0.0.0
 throttle.min_peers.normal.set = 1
 throttle.max_peers.normal.set = 4096
 throttle.min_peers.seed.set = 1
@@ -30,11 +29,11 @@ network.xmlrpc.size_limit.set = 10000000
 network.max_open_files.set = 4096
 network.http.max_open.set = 4096
 
-execute2 = {sh,-c,/usr/bin/php /var/www/html/torrent/php/initplugins.php torrent &}
+execute2 = {sh,-c,/usr/bin/php7 /var/www/html/torrent/php/initplugins.php torrent &}
 
 schedule2 = watch_directory,1,1,"load_start=/data/.watch/*.torrent"
 schedule2 = untied_directory,5,5,"stop_untied=/data/.watch/*.torrent"
-schedule2 = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/var/run/torrent/rtorrent.sock"
+schedule2 = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/run/torrent/rtorrent.sock"
 schedule2 = insufficient_disk_space,1,30,close_low_diskspace=500M
 
 method.set_key = event.download.finished,filebot,"execute2={/usr/local/bin/postdl,$d.base_path=,$d.name=,$d.custom1=}"
