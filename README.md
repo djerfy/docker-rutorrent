@@ -16,7 +16,9 @@
 
 # Docker rTorrent + ruTorrent + Filebot
 
-> Image of origin comes from [xataz](https://github.com/xataz): [docker-rtorrent-rutorrent](https://github.com/xataz/docker-rtorrent-rutorrent)
+> :warning: **This repository is no longer maintained, please follow:**
+> * [mondediefr/docker-rutorrent](https://github.com/mondediefr/docker-rutorrent)
+> * [crazy-max/docker-rtorrent-rutorrent](https://github.com/crazy-max/docker-rtorrent-rutorrent)
 
 ## Features
 
